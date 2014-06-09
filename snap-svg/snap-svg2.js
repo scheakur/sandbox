@@ -12,16 +12,19 @@
 
     function() {
       addTextBox('foo');
+      addArrow();
     },
 
     function() {
       for (var i = 0; i < 3; i++) {
         addTextBox('bar' + i);
+        addArrow();
       }
     },
 
     function() {
       addTextBox(['hoge', 'fuga']);
+      addArrow();
     }
 
   ];
@@ -47,6 +50,11 @@
     paper.group(r, t);
   }
 
+  function addArrow() {
+    var y = bottom(last);
+    paper.path('M 60 ' + y + ' l 0 45').attr({class: 'arrow'});
+    paper.path('M 50 ' + (y + 30) + ' l 10 15 10 -15').attr({class: 'arrow'});
+  }
 
   var interval = 300;
 
