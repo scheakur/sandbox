@@ -24,7 +24,6 @@
 
     function() {
       addTextBox(['hoge', 'fuga']);
-      addArrow();
     }
 
   ];
