@@ -51,12 +51,13 @@
 
   function addArrow() {
     var y = bottom(last);
-    paper.path('M 60 ' + y + ' l 0 45').attr({
+    var bar = paper.path('M 60 ' + y + ' l 0 45').attr({
       class: 'arrow'
     });
-    paper.path('M 50 ' + (y + 30) + ' l 10 15 10 -15').attr({
+    var tip = paper.path('M 50 ' + (y + 30) + ' l 10 15 10 -15').attr({
       class: 'arrow'
     });
+    paper.group(bar, tip);
   }
 
   var interval = 300;
