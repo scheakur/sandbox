@@ -60,11 +60,11 @@
 
   function addTextBoxes(texts) {
     var y = bottom(last);
-    var x = 60;
+    var x = width / (texts.length + 1);
     texts.forEach(function(text) {
       console.log(text, x, y);
       addTextBox(text, x, y);
-      x += 200;
+      x += x;
     });
   }
 
