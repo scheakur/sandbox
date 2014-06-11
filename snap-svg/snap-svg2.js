@@ -62,7 +62,6 @@
     var y = bottom(last);
     var x = width / (texts.length + 1);
     texts.forEach(function(text) {
-      console.log(text, x, y);
       addTextBox(text, x, y);
       x += x;
     });
@@ -70,7 +69,6 @@
 
   function fmt(tmpl) {
     var parts = Array.prototype.slice.call(arguments, 1, arguments.length);
-    console.log(parts);
     while (tmpl.match(/%s/) && parts.length > 0) {
       tmpl = tmpl.replace(/%s/, parts.shift());
     }
