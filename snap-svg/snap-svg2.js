@@ -24,6 +24,10 @@
 
     function() {
       addTextBox(['hoge', 'fuga']);
+    },
+
+    function() {
+      addTextBoxes(['hoge', 'fuga']);
     }
 
   ];
@@ -32,10 +36,11 @@
     return (el) ? el.getBBox().y2 : 0;
   }
 
-  function addTextBox(text) {
-    var y = bottom(last);
+  function addTextBox(text, x, y) {
+    x = x || 60;
+    y = y || bottom(last);
     var margin = 80;
-    var t = paper.text(60, y + margin, text);
+    var t = paper.text(x, y + margin, text);
     t.attr({
       class: 'box-text'
     });
@@ -47,6 +52,16 @@
       class: 'box'
     });
     paper.group(r, t);
+  }
+
+  function addTextBoxes(texts) {
+    var y = bottom(last);
+    var x = 60;
+    texts.forEach(function(text) {
+      console.log(text, x, y);
+      addTextBox(text, x, y);
+      x += 200;
+    });
   }
 
   function addArrow() {
