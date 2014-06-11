@@ -6,7 +6,7 @@
   var paper, last;
 
   var width = 800;
-  var height = 1200;
+  var height = 200;
   var center = width / 2;
 
   var fns = [
@@ -59,7 +59,12 @@
     r.attr({
       class: 'box'
     });
-    paper.group(r, t);
+
+    var g = paper.group(r, t);
+
+    if (g.getBBox().y2 > paper.node.getAttribute('height')) {
+      paper.node.setAttribute('height', g.getBBox().y2 + 10);
+    }
   }
 
   function addTextBoxes(texts) {
