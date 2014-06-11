@@ -68,12 +68,27 @@
     });
   }
 
+  function fmt(tmpl) {
+    var parts = Array.prototype.slice.call(arguments, 1, arguments.length);
+    console.log(parts);
+    while (tmpl.match(/%s/) && parts.length > 0) {
+      tmpl = tmpl.replace(/%s/, parts.shift());
+    }
+    return tmpl;
+  }
+
+  var barLen = 45;
+  var tipH = 15;
+  var tipW = 10;
+
   function addArrow() {
     var y = bottom(last);
-    var bar = paper.path('M ' + center + ' ' + y + ' l 0 45').attr({
+
+    var bar = paper.path(fmt('M %s %s l 0 %s', center, y, barLen)).attr({
       class: 'arrow'
     });
-    var tip = paper.path('M ' + (center - 10) + ' ' + (y + 30) + ' l 10 15 10 -15').attr({
+    var tip = paper.path(fmt('M %s %s l %s %s %s -%s',
+        center - tipW,  y + barLen - tipH, tipW, tipH, tipW, tipH)).attr({
       class: 'arrow'
     });
     paper.group(bar, tip);
