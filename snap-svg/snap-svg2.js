@@ -5,9 +5,13 @@
   'use strict';
   var paper, last;
 
+  var width = 800;
+  var height = 600;
+  var center = width / 2;
+
   var fns = [
     function() {
-      paper = Snap(800, 600);
+      paper = Snap(width, height);
     },
 
     function() {
@@ -37,7 +41,7 @@
   }
 
   function addTextBox(text, x, y) {
-    x = x || 60;
+    x = x || center;
     y = y || bottom(last);
     var margin = 80;
     var t = paper.text(x, y + margin, text);
@@ -66,10 +70,10 @@
 
   function addArrow() {
     var y = bottom(last);
-    var bar = paper.path('M 60 ' + y + ' l 0 45').attr({
+    var bar = paper.path('M ' + center + ' ' + y + ' l 0 45').attr({
       class: 'arrow'
     });
-    var tip = paper.path('M 50 ' + (y + 30) + ' l 10 15 10 -15').attr({
+    var tip = paper.path('M ' + (center - 10) + ' ' + (y + 30) + ' l 10 15 10 -15').attr({
       class: 'arrow'
     });
     paper.group(bar, tip);
