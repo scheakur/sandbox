@@ -6,7 +6,7 @@
   var paper, last;
 
   var width = 800;
-  var height = 600;
+  var height = 1200;
   var center = width / 2;
 
   var fns = [
@@ -32,6 +32,10 @@
 
     function() {
       addTextBoxes(['hoge', 'fuga']);
+    },
+
+    function() {
+      addTextBoxes(['foo', 'bar', 'baz']);
     }
 
   ];
@@ -60,10 +64,11 @@
 
   function addTextBoxes(texts) {
     var y = bottom(last);
-    var x = width / (texts.length + 1);
+    var ux = width / (texts.length + 1);
+    var x = ux;
     texts.forEach(function(text) {
       addTextBox(text, x, y);
-      x += x;
+      x += ux;
     });
   }
 
