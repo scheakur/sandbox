@@ -121,7 +121,14 @@
   }
 
   function curve(xf, yf, xt, yt) {
-    var bar = paper.path(fmt('M %s %s Q %s %s %s %s %s %s %s %s', xf, yf, xf, yt, xf + (xt - xf) / 2, yf + (yt - yf) / 2, xt, yf, xt, yt)).attr({
+    var ydiff = yf - yt;
+    var invert = ydiff > 0;
+    var bar = paper.path(fmt('M %s %s Q %s %s %s %s %s %s %s %s',
+        xf, yf,
+        xf, invert ? yf + ydiff : yt,
+        xf + (xt - xf) / 2, yf + (yt - yf) / 2,
+        xt, invert ? yt - ydiff : yf,
+        xt, yt)).attr({
       class: 'arrow'
     });
     var tip = paper.path(fmt('M %s %s l %s %s %s -%s',
