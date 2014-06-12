@@ -45,7 +45,7 @@
   function addTextBox(text, x, y) {
     x = x || center;
     y = y || bottom(last);
-    var margin = 80;
+    var margin = 120;
     var t = paper.text(x, y + margin, text);
     t.attr({
       class: 'box-text'
@@ -64,7 +64,7 @@
     last = g;
 
     if (g.getBBox().y2 > paper.node.getAttribute('height')) {
-      paper.node.setAttribute('height', g.getBBox().y2 + 10);
+      paper.node.setAttribute('height', g.getBBox().y2 + 100);
     }
   }
 
@@ -86,7 +86,7 @@
     return tmpl;
   }
 
-  var tipH = 15;
+  var tipH = 16;
   var tipW = 10;
 
   function addConnectorArrow(from, to) {
