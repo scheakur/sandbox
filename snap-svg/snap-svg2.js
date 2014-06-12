@@ -95,11 +95,11 @@
     }
 
     var bf = from.getBBox();
-    var xf = bf.x + (bf.x2 - bf.x) / 2;
+    var xf = bf.cx;
     var yf = bf.y2;
 
     var bt = to.getBBox();
-    var xt = bt.x + (bt.x2 - bt.x) / 2;
+    var xt = bt.cx;
     var yt = bt.y;
 
     if (Math.abs(xt - xf) < 10 || Math.abs(yt - yf) < 10) {
