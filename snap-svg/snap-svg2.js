@@ -102,7 +102,26 @@
     var xt = bt.x + (bt.x2 - bt.x) / 2;
     var yt = bt.y;
 
+    if (Math.abs(xt - xf) < 10 || Math.abs(yt - yf) < 10) {
+      straight(xf, yf, xt, yt);
+    } else {
+      curve(xf, yf, xt, yt);
+    }
+  }
+
+  function straight(xf, yf, xt, yt) {
     var bar = paper.path(fmt('M %s %s L %s %s', xf, yf, xt, yt)).attr({
+      class: 'arrow'
+    });
+    var tip = paper.path(fmt('M %s %s l %s %s %s -%s',
+        xt - tipW,  yt - tipH, tipW, tipH, tipW, tipH)).attr({
+      class: 'arrow'
+    });
+    paper.group(bar, tip);
+  }
+
+  function curve(xf, yf, xt, yt) {
+    var bar = paper.path(fmt('M %s %s Q %s %s %s %s %s %s %s %s', xf, yf, xf, yt, xf + (xt - xf) / 2, yf + (yt - yf) / 2, xt, yf, xt, yt)).attr({
       class: 'arrow'
     });
     var tip = paper.path(fmt('M %s %s l %s %s %s -%s',
