@@ -53,12 +53,15 @@
     var b = t.getBBox();
     var padding = 10;
     var r = paper.rect(b.x - padding, b.y - padding, b.w + 2 * padding, b.h + 2 * padding, 5, 5);
-    last = r;
     r.attr({
       class: 'box'
     });
 
     var g = paper.group(r, t);
+
+    addConnectorArrow(last, g);
+
+    last = g;
 
     if (g.getBBox().y2 > paper.node.getAttribute('height')) {
       paper.node.setAttribute('height', g.getBBox().y2 + 10);
@@ -83,18 +86,27 @@
     return tmpl;
   }
 
-  var barLen = 45;
   var tipH = 15;
   var tipW = 10;
 
-  function addArrow() {
-    var y = bottom(last);
+  function addConnectorArrow(from, to) {
+    if (!from || !to) {
+      return;
+    }
 
-    var bar = paper.path(fmt('M %s %s l 0 %s', center, y, barLen)).attr({
+    var bf = from.getBBox();
+    var xf = bf.x + (bf.x2 - bf.x) / 2;
+    var yf = bf.y2;
+
+    var bt = to.getBBox();
+    var xt = bt.x + (bt.x2 - bt.x) / 2;
+    var yt = bt.y;
+
+    var bar = paper.path(fmt('M %s %s L %s %s', xf, yf, xt, yt)).attr({
       class: 'arrow'
     });
     var tip = paper.path(fmt('M %s %s l %s %s %s -%s',
-        center - tipW,  y + barLen - tipH, tipW, tipH, tipW, tipH)).attr({
+        xt - tipW,  yt - tipH, tipW, tipH, tipW, tipH)).attr({
       class: 'arrow'
     });
     paper.group(bar, tip);
