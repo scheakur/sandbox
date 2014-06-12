@@ -16,13 +16,11 @@
 
     function() {
       addTextBox('foo');
-      addArrow();
     },
 
     function() {
       for (var i = 0; i < 3; i++) {
         addTextBox('bar' + i);
-        addArrow();
       }
     },
 
