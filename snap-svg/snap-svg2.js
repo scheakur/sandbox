@@ -42,9 +42,9 @@
     return (el) ? el.getBBox().y2 : 0;
   }
 
-  function addTextBox(text, x, y) {
+  function addTextBox(text, x, y, from) {
     x = x || center;
-    y = y || bottom(last);
+    y = y || bottom(from || last);
     var margin = 120;
     var t = paper.text(x, y + margin, text);
     t.attr({
@@ -59,7 +59,7 @@
 
     var g = paper.group(r, t);
 
-    addConnectorArrow(last, g);
+    addConnectorArrow(from || last, g);
 
     last = g;
 
@@ -72,8 +72,9 @@
     var y = bottom(last);
     var ux = width / (texts.length + 1);
     var x = ux;
+    var from = last;
     texts.forEach(function(text) {
-      addTextBox(text, x, y);
+      addTextBox(text, x, y, from);
       x += ux;
     });
   }
