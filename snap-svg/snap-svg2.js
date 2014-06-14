@@ -118,11 +118,7 @@
     var bar = paper.path(fmt('M %s %s L %s %s', xf, yf, xt, yt)).attr({
       class: 'arrow'
     });
-    var tip = paper.path(fmt('M %s %s l %s %s %s -%s',
-        xt - tipW,  yt - tipH, tipW, tipH, tipW, tipH)).attr({
-      class: 'arrow'
-    });
-    paper.group(bar, tip);
+    paper.group(bar, tip(xt, yt));
   }
 
   function curve(xf, yf, xt, yt) {
@@ -136,11 +132,14 @@
         xt, yt)).attr({
       class: 'arrow'
     });
-    var tip = paper.path(fmt('M %s %s l %s %s %s -%s',
-        xt - tipW,  yt - tipH, tipW, tipH, tipW, tipH)).attr({
+    paper.group(bar, tip(xt, yt));
+  }
+
+  function tip(x, y) {
+    return paper.path(fmt('M %s %s l %s %s %s -%s',
+        x - tipW,  y - tipH, tipW, tipH, tipW, tipH)).attr({
       class: 'arrow'
     });
-    paper.group(bar, tip);
   }
 
   var interval = 300;
