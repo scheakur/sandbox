@@ -33,6 +33,10 @@
     },
 
     function() {
+      addTextBox('piyo');
+    },
+
+    function() {
       addTextBoxes(['foo', 'bar', 'baz']);
     }
 
