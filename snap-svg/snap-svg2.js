@@ -25,7 +25,7 @@
     },
 
     function() {
-      addTextBox(['hoge', 'fuga']);
+      addTextBox(['hoge', 'fuga', 'piyopiyo', 'foobar']);
     },
 
     function() {
@@ -53,6 +53,12 @@
     var t = paper.text(x, y + margin, text);
     t.attr({
       class: 'box-text'
+    });
+    t.selectAll('tspan').forEach(function(tspan, i) {
+      tspan.attr({
+        x: x,
+        dy: 40
+      });
     });
     var b = t.getBBox();
     var padding = 10;
