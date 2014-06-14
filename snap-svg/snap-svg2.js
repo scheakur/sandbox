@@ -91,10 +91,10 @@
 
   function fmt(tmpl) {
     var parts = Array.prototype.slice.call(arguments, 1, arguments.length);
-    while (tmpl.match(/%s/) && parts.length > 0) {
-      tmpl = tmpl.replace(/%s/, parts.shift());
-    }
-    return tmpl;
+    var i = 0;
+    return tmpl.replace(/%s/g, function() {
+      return parts[i++];
+    });
   }
 
   var tipH = 16;
