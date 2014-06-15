@@ -29,7 +29,7 @@
     },
 
     function() {
-      addTextBoxes(['hoge', 'fuga']);
+      addTextBoxes(['hoge', ['fuga', 'piyo']]);
     },
 
     function() {
@@ -54,11 +54,9 @@
     t.attr({
       class: 'box-text'
     });
-    t.selectAll('tspan').forEach(function(tspan, i) {
-      tspan.attr({
-        x: x,
-        dy: 40
-      });
+    t.selectAll('tspan:nth-child(n+2)').attr({
+      x: x,
+      dy: 40
     });
     var b = t.getBBox();
     var padding = 10;
