@@ -50,25 +50,27 @@
 
   var boxMap = mapify(boxes);
 
-  function a(start, end) {
+  function a(start, startEdge, end, endEdge) {
     return {
       start: start,
-      end: end
+      startEdge: startEdge,
+      end: end,
+      endEdge: endEdge
     };
   }
 
   var arrows = [
-    a('box-id-00', 'box-id-01'),
-    a('box-id-01', 'box-id-02'),
-    a('box-id-02', 'box-id-03'),
-    a('box-id-03', 'box-id-04'),
-    a('box-id-04', 'box-id-05'),
-    a('box-id-04', 'box-id-06'),
-    a('box-id-05', 'box-id-07'),
-    a('box-id-06', 'box-id-07'),
-    a('box-id-07', 'box-id-08'),
-    a('box-id-07', 'box-id-09'),
-    a('box-id-07', 'box-id-10')
+    a('box-id-00', 'bottom', 'box-id-01', 'top'),
+    a('box-id-01', 'bottom', 'box-id-02', 'top'),
+    a('box-id-02', 'bottom', 'box-id-03', 'top'),
+    a('box-id-03', 'bottom', 'box-id-04', 'top'),
+    a('box-id-04', 'bottom', 'box-id-05', 'top'),
+    a('box-id-04', 'bottom', 'box-id-06', 'top'),
+    a('box-id-05', 'bottom', 'box-id-07', 'top'),
+    a('box-id-06', 'bottom', 'box-id-07', 'top'),
+    a('box-id-07', 'bottom', 'box-id-08', 'top'),
+    a('box-id-07', 'bottom', 'box-id-09', 'top'),
+    a('box-id-07', 'bottom', 'box-id-10', 'top')
   ];
 
   function draw(bs, as) {
@@ -76,7 +78,9 @@
       addTextBoxes(row);
     });
     as.forEach(function (a) {
-      addConnectorArrow(paper.select('#' + a.start), paper.select('#' + a.end));
+      addConnectorArrow(
+        paper.select('#' + a.start), a.startEdge,
+        paper.select('#' + a.end), a.endEdge);
     });
   }
 
@@ -115,7 +119,6 @@
   }
 
   function addTextBoxes(boxes) {
-    console.log(boxes);
     var y = bottom(last);
     var ux = width / (boxes.length + 1);
     var x = ux;
@@ -137,24 +140,39 @@
   var tipH = 16;
   var tipW = 10;
 
-  function addConnectorArrow(start, end) {
+  function addConnectorArrow(start, startEdge, end, endEdge) {
     if (!start || !end) {
       return;
     }
 
-    var bs = start.getBBox();
-    var xs = bs.cx;
-    var ys = bs.y2;
+    var s = getConnectPoint(start, startEdge);
+    var e = getConnectPoint(end, endEdge);
 
-    var be = end.getBBox();
-    var xe = be.cx;
-    var ye = be.y;
-
-    if (Math.abs(xe - xs) < 10 || Math.abs(ye - ys) < 10) {
-      straight(xs, ys, xe, ye);
+    if (Math.abs(e.x - s.x) < 10 || Math.abs(e.y - s.y) < 10) {
+      straight(s.x, s.y, e.x, e.y);
     } else {
-      curve(xs, ys, xe, ye);
+      curve(s.x, s.y, e.x, e.y);
     }
+  }
+
+  function getConnectPoint(elem, edge) {
+    var b = elem.getBBox();
+    switch (edge) {
+    case 'top':
+      return {
+        x: b.cx,
+        y: b.y
+      };
+    case 'bottom':
+      return {
+        x: b.cx,
+        y: b.y2
+      };
+    }
+    return {
+      x: 0,
+      y: 0
+    };
   }
 
   function straight(xs, ys, xe, ye) {
