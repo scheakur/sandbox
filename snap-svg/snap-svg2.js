@@ -34,9 +34,16 @@
     [b('box-id-02', 'bar1')],
     [b('box-id-03', 'bar2')],
     [b('box-id-04', ['hoge', 'fuga', 'piyopiyo', 'foobar'])],
-    [b('box-id-05', 'hoge'), b('box-id-06', ['fuga', 'piyo'])],
+    [
+      b('box-id-05', 'hoge'),
+      b('box-id-06', ['fuga', 'piyo'])
+    ],
     [b('box-id-07', 'piyo')],
-    [b('box-id-08', 'foo'), b('box-id-09', 'bar'), b('box-id-10', 'baz')]
+    [
+      b('box-id-08', 'foo'),
+      b('box-id-09', 'bar'),
+      b('box-id-10', 'baz')
+    ]
   ];
 
   function mapify(boxes) {
