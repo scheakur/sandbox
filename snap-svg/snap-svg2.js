@@ -155,24 +155,22 @@
     }
   }
 
+  function p(x, y) {
+    return {
+      x: x,
+      y: y
+    };
+  }
+
   function getConnectPoint(elem, edge) {
     var b = elem.getBBox();
     switch (edge) {
     case 'top':
-      return {
-        x: b.cx,
-        y: b.y
-      };
+      return p(b.cx, b.y);
     case 'bottom':
-      return {
-        x: b.cx,
-        y: b.y2
-      };
+      return p(b.cx, b.y2);
     }
-    return {
-      x: 0,
-      y: 0
-    };
+    return p(0, 0);
   }
 
   function straight(xs, ys, xe, ye) {
