@@ -15,38 +15,76 @@
     },
 
     function() {
-      addTextBox('foo');
-    },
-
-    function() {
-      for (var i = 0; i < 3; i++) {
-        addTextBox('bar' + i);
-      }
-    },
-
-    function() {
-      addTextBox(['hoge', 'fuga', 'piyopiyo', 'foobar']);
-    },
-
-    function() {
-      addTextBoxes(['hoge', ['fuga', 'piyo']]);
-    },
-
-    function() {
-      addTextBox('piyo');
-    },
-
-    function() {
-      addTextBoxes(['foo', 'bar', 'baz']);
+      draw(boxes, arrows);
     }
-
   ];
+
+  function b(id, text, y, x) {
+    return {
+      id: id,
+      text: text,
+      y: y,
+      x: x || 0
+    };
+  }
+
+  var boxes = [
+    [b('box-id-00', 'foo')],
+    [b('box-id-01', 'bar0')],
+    [b('box-id-02', 'bar1')],
+    [b('box-id-03', 'bar2')],
+    [b('box-id-04', ['hoge', 'fuga', 'piyopiyo', 'foobar'])],
+    [b('box-id-05', 'hoge'), b('box-id-06', ['fuga', 'piyo'])],
+    [b('box-id-07', 'piyo')],
+    [b('box-id-08', 'foo'), b('box-id-09', 'bar'), b('box-id-10', 'baz')]
+  ];
+
+  function mapify(boxes) {
+    return boxes.reduce(function(map, row) {
+      row.forEach(function(box) {
+        map[box.id] = box;
+      });
+      return map;
+    }, {});
+  }
+
+  var boxMap = mapify(boxes);
+
+  function a(start, end) {
+    return {
+      start: start,
+      end: end
+    };
+  }
+
+  var arrows = [
+    a('box-id-00', 'box-id-01'),
+    a('box-id-01', 'box-id-02'),
+    a('box-id-02', 'box-id-03'),
+    a('box-id-03', 'box-id-04'),
+    a('box-id-04', 'box-id-05'),
+    a('box-id-04', 'box-id-06'),
+    a('box-id-05', 'box-id-07'),
+    a('box-id-06', 'box-id-07'),
+    a('box-id-07', 'box-id-08'),
+    a('box-id-07', 'box-id-09'),
+    a('box-id-07', 'box-id-10')
+  ];
+
+  function draw(bs, as) {
+    bs.forEach(function (row) {
+      addTextBoxes(row);
+    });
+    as.forEach(function (a) {
+      addConnectorArrow(paper.select('#' + a.start), paper.select('#' + a.end));
+    });
+  }
 
   function bottom(el) {
     return (el) ? el.getBBox().y2 : 0;
   }
 
-  function addTextBox(text, x, y, start) {
+  function addTextBox(id, text, x, y, start) {
     x = x || center;
     y = y || bottom(start || last);
     var margin = 120;
@@ -65,9 +103,9 @@
       class: 'box'
     });
 
-    var g = paper.group(r, t);
-
-    addConnectorArrow(start || last, g);
+    var g = paper.group(r, t).attr({
+      id: id
+    });
 
     last = g;
 
@@ -76,13 +114,14 @@
     }
   }
 
-  function addTextBoxes(texts) {
+  function addTextBoxes(boxes) {
+    console.log(boxes);
     var y = bottom(last);
-    var ux = width / (texts.length + 1);
+    var ux = width / (boxes.length + 1);
     var x = ux;
     var start = last;
-    texts.forEach(function(text) {
-      addTextBox(text, x, y, start);
+    boxes.forEach(function(box) {
+      addTextBox(box.id, box.text, x, y, start);
       x += ux;
     });
   }
@@ -145,6 +184,7 @@
       class: 'arrow'
     });
   }
+
 
   var interval = 300;
 
