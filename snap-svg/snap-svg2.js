@@ -155,17 +155,34 @@
     var s = getConnectPoint(start, startEdge);
     var e = getConnectPoint(end, endEdge);
 
-    if (Math.abs(e.x - s.x) < 10 || Math.abs(e.y - s.y) < 10) {
-      straight(s, e);
-    } else {
-      curve(s, e);
-    }
+    arrow(s, e).draw();
   }
 
-  function p(x, y) {
+  function drawer(fn) {
+    return {
+      draw: fn
+    };
+  }
+
+  function arrow(s, e) {
+    switch (s.e + '-' + e.e) {
+    case 'bottom-top':
+      return drawer(function() {
+        if (Math.abs(e.x - s.x) < 10 || Math.abs(e.y - s.y) < 10) {
+          straight(s, e);
+        } else {
+          curve(s, e);
+        }
+      });
+    }
+    return drawer(function() {});
+  }
+
+  function p(x, y, e) {
     return {
       x: x,
-      y: y
+      y: y,
+      e: e
     };
   }
 
@@ -173,11 +190,11 @@
     var b = elem.getBBox();
     switch (edge) {
     case 'top':
-      return p(b.cx, b.y);
+      return p(b.cx, b.y, edge);
     case 'bottom':
-      return p(b.cx, b.y2);
+      return p(b.cx, b.y2, edge);
     }
-    return p(0, 0);
+    return p(0, 0, 'bottom');
   }
 
   function straight(s, e) {
