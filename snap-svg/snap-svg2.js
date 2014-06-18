@@ -177,13 +177,12 @@
     case 'left-top':
     case 'right-top':
       return drawer(function() {
-        var bar = paper.path(fmt('M %s %s S %s %s %s %s',
+        paper.group(
+          shaft('M %s %s S %s %s %s %s',
             s.x, s.y,
             e.x, s.y,
-            e.x, e.y)).attr({
-          class: 'arrow'
-        });
-        paper.group(bar, tip(e.x, e.y));
+            e.x, e.y),
+          tip(e.x, e.y));
       });
     }
     return drawer(function() {});
@@ -214,25 +213,27 @@
 
   function straight(s, e) {
     var xs = s.x, ys = s.y, xe = e.x, ye = e.y;
-    var bar = paper.path(fmt('M %s %s L %s %s', xs, ys, xe, ye)).attr({
-      class: 'arrow'
-    });
-    paper.group(bar, tip(xe, ye));
+    paper.group(shaft('M %s %s L %s %s', xs, ys, xe, ye), tip(xe, ye));
   }
 
   function curve(s, e) {
     var xs = s.x, ys = s.y, xe = e.x, ye = e.y;
     var ydiff = ys - ye;
     var invert = ydiff > 0;
-    var bar = paper.path(fmt('M %s %s Q %s %s %s %s %s %s %s %s',
+    paper.group(
+      shaft('M %s %s Q %s %s %s %s %s %s %s %s',
         xs, ys,
         xs, invert ? ys + ydiff : ye,
         xs + (xe - xs) / 2, ys + (ye - ys) / 2,
         xe, invert ? ye - ydiff : ys,
-        xe, ye)).attr({
+        xe, ye),
+      tip(xe, ye));
+  }
+
+  function shaft() {
+    return paper.path(fmt.apply(null, arguments)).attr({
       class: 'arrow'
     });
-    paper.group(bar, tip(xe, ye));
   }
 
   function tip(x, y) {
