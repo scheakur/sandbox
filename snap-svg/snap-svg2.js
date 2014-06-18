@@ -71,8 +71,8 @@
     a('box-id-01', 'bottom', 'box-id-02', 'top'),
     a('box-id-02', 'bottom', 'box-id-03', 'top'),
     a('box-id-03', 'bottom', 'box-id-04', 'top'),
-    a('box-id-04', 'bottom', 'box-id-05', 'top'),
-    a('box-id-04', 'bottom', 'box-id-06', 'top'),
+    a('box-id-04', 'left',   'box-id-05', 'top'),
+    a('box-id-04', 'right',  'box-id-06', 'top'),
     a('box-id-05', 'bottom', 'box-id-07', 'top'),
     a('box-id-06', 'bottom', 'box-id-07', 'top'),
     a('box-id-07', 'bottom', 'box-id-08', 'top'),
@@ -174,6 +174,17 @@
           curve(s, e);
         }
       });
+    case 'left-top':
+    case 'right-top':
+      return drawer(function() {
+        var bar = paper.path(fmt('M %s %s S %s %s %s %s',
+            s.x, s.y,
+            e.x, s.y,
+            e.x, e.y)).attr({
+          class: 'arrow'
+        });
+        paper.group(bar, tip(e.x, e.y));
+      });
     }
     return drawer(function() {});
   }
@@ -191,8 +202,12 @@
     switch (edge) {
     case 'top':
       return p(b.cx, b.y, edge);
+    case 'right':
+      return p(b.x2, b.cy, edge);
     case 'bottom':
       return p(b.cx, b.y2, edge);
+    case 'left':
+      return p(b.x, b.cy, edge);
     }
     return p(0, 0, 'bottom');
   }
