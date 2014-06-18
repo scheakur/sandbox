@@ -156,9 +156,9 @@
     var e = getConnectPoint(end, endEdge);
 
     if (Math.abs(e.x - s.x) < 10 || Math.abs(e.y - s.y) < 10) {
-      straight(s.x, s.y, e.x, e.y);
+      straight(s, e);
     } else {
-      curve(s.x, s.y, e.x, e.y);
+      curve(s, e);
     }
   }
 
@@ -180,14 +180,16 @@
     return p(0, 0);
   }
 
-  function straight(xs, ys, xe, ye) {
+  function straight(s, e) {
+    var xs = s.x, ys = s.y, xe = e.x, ye = e.y;
     var bar = paper.path(fmt('M %s %s L %s %s', xs, ys, xe, ye)).attr({
       class: 'arrow'
     });
     paper.group(bar, tip(xe, ye));
   }
 
-  function curve(xs, ys, xe, ye) {
+  function curve(s, e) {
+    var xs = s.x, ys = s.y, xe = e.x, ye = e.y;
     var ydiff = ys - ye;
     var invert = ydiff > 0;
     var bar = paper.path(fmt('M %s %s Q %s %s %s %s %s %s %s %s',
