@@ -46,17 +46,6 @@
     ]
   ];
 
-  function mapify(boxes) {
-    return boxes.reduce(function(map, row) {
-      row.forEach(function(box) {
-        map[box.id] = box;
-      });
-      return map;
-    }, {});
-  }
-
-  var boxMap = mapify(boxes);
-
   function a(start, startEdge, end, endEdge) {
     return {
       start: start,
