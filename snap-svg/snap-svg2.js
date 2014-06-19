@@ -109,6 +109,10 @@
 
     last = g;
 
+    resizePaper(g);
+  }
+
+  function resizePaper(g) {
     if (g.getBBox().y2 > paper.node.getAttribute('height')) {
       paper.node.setAttribute('height', g.getBBox().y2 + 100);
     }
