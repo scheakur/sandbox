@@ -110,12 +110,41 @@
     last = g;
 
     resizePaper(g);
+    makeDraggable(g);
   }
 
   function resizePaper(g) {
     if (g.getBBox().y2 > paper.node.getAttribute('height')) {
       paper.node.setAttribute('height', g.getBBox().y2 + 100);
     }
+  }
+
+  function makeDraggable(g) {
+    var origTransform;
+    g.drag(function(dx, dy) {
+      this.attr({
+        transform: origTransform + (origTransform ? 'T' : 't') + [dx, dy]
+      });
+    }, function() {
+      origTransform = this.transform().local;
+    }, function() {
+      var id = this.node.id;
+      paper.selectAll('.' + id).forEach(function(elem) {
+        redraw(elem);
+      });
+    });
+  }
+
+  function redraw(elem) {
+    var cls = elem.node.classList;
+    var sid = cls[0];
+    var sedge = cls[1];
+    var eid = cls[2];
+    var eedge = cls[3];
+    var start = paper.select('#' + sid);
+    var end = paper.select('#' + eid);
+    elem.remove();
+    addConnectorArrow(start, sedge, end, eedge);
   }
 
   function addTextBoxes(boxes) {
@@ -170,57 +199,70 @@
     case 'left-top':
     case 'right-top':
       return drawer(function() {
-        paper.group(
+        build(
           shaft('M %s %s S %s %s %s %s',
             s.x, s.y,
             e.x, s.y,
             e.x, e.y),
-          tip(e.x, e.y));
+          tip(e.x, e.y),
+          [s, e]);
       });
     }
     return drawer(function() {});
   }
 
-  function p(x, y, e) {
+  function p(x, y, e, id) {
     return {
       x: x,
       y: y,
-      e: e
+      e: e,
+      id: id
     };
   }
 
   function getConnectPoint(elem, edge) {
     var b = elem.getBBox();
+    var id = elem.node.id;
     switch (edge) {
     case 'top':
-      return p(b.cx, b.y, edge);
+      return p(b.cx, b.y, edge, id);
     case 'right':
-      return p(b.x2, b.cy, edge);
+      return p(b.x2, b.cy, edge, id);
     case 'bottom':
-      return p(b.cx, b.y2, edge);
+      return p(b.cx, b.y2, edge, id);
     case 'left':
-      return p(b.x, b.cy, edge);
+      return p(b.x, b.cy, edge, id);
     }
-    return p(0, 0, 'bottom');
+    return p(0, 0, 'bottom', '');
   }
 
   function straight(s, e) {
     var xs = s.x, ys = s.y, xe = e.x, ye = e.y;
-    paper.group(shaft('M %s %s L %s %s', xs, ys, xe, ye), tip(xe, ye));
+    build(shaft('M %s %s L %s %s', xs, ys, xe, ye), tip(xe, ye), [s, e]);
   }
 
   function curve(s, e) {
     var xs = s.x, ys = s.y, xe = e.x, ye = e.y;
     var ydiff = ys - ye;
     var invert = ydiff > 0;
-    paper.group(
+    build(
       shaft('M %s %s Q %s %s %s %s %s %s %s %s',
         xs, ys,
         xs, invert ? ys + ydiff : ye,
         xs + (xe - xs) / 2, ys + (ye - ys) / 2,
         xe, invert ? ye - ydiff : ys,
         xe, ye),
-      tip(xe, ye));
+      tip(xe, ye),
+      [s, e]
+    );
+  }
+
+  function build(shaft, tip, info) {
+    paper.group(shaft, tip).attr({
+      class: info.map(function(i) {
+        return i.id + ' ' + i.e;
+      }).join(' ')
+    });
   }
 
   function shaft() {
