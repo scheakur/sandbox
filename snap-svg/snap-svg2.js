@@ -190,7 +190,8 @@
     switch (s.e + '-' + e.e) {
     case 'bottom-top':
       return drawer(function() {
-        if (Math.abs(e.x - s.x) < 10 || Math.abs(e.y - s.y) < 10) {
+        var threshold = 20;
+        if (Math.abs(e.x - s.x) < threshold || Math.abs(e.y - s.y) < threshold) {
           straight(s, e);
         } else {
           curve(s, e);
