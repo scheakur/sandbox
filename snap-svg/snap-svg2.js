@@ -125,13 +125,12 @@
       this.attr({
         transform: origTransform + (origTransform ? 'T' : 't') + [dx, dy]
       });
-    }, function() {
-      origTransform = this.transform().local;
-    }, function() {
       var id = this.node.id;
       paper.selectAll('.' + id).forEach(function(elem) {
         redraw(elem);
       });
+    }, function() {
+      origTransform = this.transform().local;
     });
   }
 
@@ -143,8 +142,17 @@
     var eedge = cls[3];
     var start = paper.select('#' + sid);
     var end = paper.select('#' + eid);
-    elem.remove();
-    addConnectorArrow(start, sedge, end, eedge);
+
+    var s = getConnectPoint(start, sedge);
+    var e = getConnectPoint(end, eedge);
+
+    var a = arrow(s, e);
+    elem.select('.shaft').attr({
+      d: a.shaftPath(s, e)
+    });
+    elem.select('.tip').attr({
+      d: a.tipPath(s, e)
+    });
   }
 
   function addTextBoxes(boxes) {
@@ -184,7 +192,9 @@
     return {
       draw: function(s, e) {
         arrow_(s, e, pathFn);
-      }
+      },
+      shaftPath: pathFn,
+      tipPath: tipPath
     };
   }
 
@@ -236,7 +246,7 @@
   }
 
   function arrow_(s, e, pathFn) {
-    build(shaft(pathFn(s, e)), tip(e.x, e.y), [s, e]);
+    build(shaft(pathFn(s, e)), tip(s, e), [s, e]);
   }
 
   function straight(s, e) {
@@ -265,14 +275,18 @@
 
   function shaft(path) {
     return paper.path(path).attr({
-      class: 'arrow'
+      class: 'arrow shaft'
     });
   }
 
-  function tip(x, y) {
-    return paper.path(fmt('M %s %s l %s %s %s -%s',
-        x - tipW,  y - tipH, tipW, tipH, tipW, tipH)).attr({
-      class: 'arrow'
+  function tipPath(s, e) {
+    return fmt('M %s %s l %s %s %s -%s',
+        e.x - tipW,  e.y - tipH, tipW, tipH, tipW, tipH)
+  }
+
+  function tip(s, e) {
+    return paper.path(tipPath(s, e)).attr({
+      class: 'arrow tip'
     });
   }
 
