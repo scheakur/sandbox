@@ -177,36 +177,34 @@
     var s = getConnectPoint(start, startEdge);
     var e = getConnectPoint(end, endEdge);
 
-    arrow(s, e).draw();
+    arrow(s, e).draw(s, e);
   }
 
-  function drawer(fn) {
+  function drawer(pathFn) {
     return {
-      draw: fn
+      draw: function(s, e) {
+        arrow_(s, e, pathFn);
+      }
     };
   }
 
   function arrow(s, e) {
     switch (s.e + '-' + e.e) {
     case 'bottom-top':
-      return drawer(function() {
+      return drawer(function(s, e) {
         var threshold = 20;
         if (Math.abs(e.x - s.x) < threshold || Math.abs(e.y - s.y) < threshold) {
-          straight(s, e);
-        } else {
-          curve(s, e);
+          return straight(s, e);
         }
+        return curve(s, e);
       });
     case 'left-top':
     case 'right-top':
-      return drawer(function() {
-        build(
-          shaft('M %s %s S %s %s %s %s',
-            s.x, s.y,
-            e.x, s.y,
-            e.x, e.y),
-          tip(e.x, e.y),
-          [s, e]);
+      return drawer(function(s, e) {
+        return fmt('M %s %s S %s %s %s %s',
+          s.x, s.y,
+          e.x, s.y,
+          e.x, e.y);
       });
     }
     return drawer(function() {});
@@ -237,25 +235,24 @@
     return p(0, 0, 'bottom', '');
   }
 
+  function arrow_(s, e, pathFn) {
+    build(shaft(pathFn(s, e)), tip(e.x, e.y), [s, e]);
+  }
+
   function straight(s, e) {
-    var xs = s.x, ys = s.y, xe = e.x, ye = e.y;
-    build(shaft('M %s %s L %s %s', xs, ys, xe, ye), tip(xe, ye), [s, e]);
+    return fmt('M %s %s L %s %s', s.x, s.y, e.x, e.y);
   }
 
   function curve(s, e) {
     var xs = s.x, ys = s.y, xe = e.x, ye = e.y;
     var ydiff = ys - ye;
     var invert = ydiff > 0;
-    build(
-      shaft('M %s %s Q %s %s %s %s %s %s %s %s',
-        xs, ys,
-        xs, invert ? ys + ydiff : ye,
-        xs + (xe - xs) / 2, ys + (ye - ys) / 2,
-        xe, invert ? ye - ydiff : ys,
-        xe, ye),
-      tip(xe, ye),
-      [s, e]
-    );
+    return fmt('M %s %s Q %s %s %s %s %s %s %s %s',
+      xs, ys,
+      xs, invert ? ys + ydiff : ye,
+      xs + (xe - xs) / 2, ys + (ye - ys) / 2,
+      xe, invert ? ye - ydiff : ys,
+      xe, ye);
   }
 
   function build(shaft, tip, info) {
@@ -266,8 +263,8 @@
     });
   }
 
-  function shaft() {
-    return paper.path(fmt.apply(null, arguments)).attr({
+  function shaft(path) {
+    return paper.path(path).attr({
       class: 'arrow'
     });
   }
