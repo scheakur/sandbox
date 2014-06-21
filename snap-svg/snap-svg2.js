@@ -255,14 +255,19 @@
 
   function curve(s, e) {
     var xs = s.x, ys = s.y, xe = e.x, ye = e.y;
-    var ydiff = ys - ye;
+    var ydiff = roundDiff(ys - ye);
     var invert = ydiff > 0;
     return fmt('M %s %s Q %s %s %s %s %s %s %s %s',
       xs, ys,
-      xs, invert ? ys + ydiff : ye,
+      xs, ys + ydiff,
       xs + (xe - xs) / 2, ys + (ye - ys) / 2,
-      xe, invert ? ye - ydiff : ys,
+      xe, ye - ydiff,
       xe, ye);
+  }
+
+  function roundDiff(v) {
+    v += 100;
+    return Math.min(Math.max(Math.abs(v) / 2, 50), 150);
   }
 
   function build(shaft, tip, info) {
