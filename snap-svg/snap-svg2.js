@@ -115,13 +115,25 @@
 
   function resizePaper(g) {
     if (g.getBBox().y2 > paper.node.getAttribute('height')) {
-      paper.node.setAttribute('height', g.getBBox().y2 + 100);
+      height = g.getBBox().y2 + 100;
+      paper.node.setAttribute('height', height);
     }
+  }
+
+  function minmax(v, min, max) {
+    return Math.max(Math.min(v, max), min);
   }
 
   function makeDraggable(g) {
     var origTransform;
+    var base;
     g.drag(function(dx, dy) {
+      var xmin = 5;
+      var xmax = width - 5;
+      var ymin = 5;
+      var ymax = height - 5;
+      dx = minmax(dx, xmin - base.x, xmax - base.x2);
+      dy = minmax(dy, ymin - base.y, ymax - base.y2);
       this.attr({
         transform: origTransform + (origTransform ? 'T' : 't') + [dx, dy]
       });
@@ -130,6 +142,7 @@
         redraw(elem);
       });
     }, function() {
+      base = g.getBBox();
       origTransform = this.transform().local;
     });
   }
