@@ -74,9 +74,7 @@
       addTextBoxes(row);
     });
     as.forEach(function (a) {
-      addConnectorArrow(
-        paper.select('#' + a.start), a.startEdge,
-        paper.select('#' + a.end), a.endEdge);
+      addConnectorArrow(a);
     });
   }
 
@@ -147,24 +145,18 @@
     });
   }
 
-  function redraw(elem) {
+  function getArrowInfo(elem) {
     var cls = elem.node.classList;
-    var sid = cls[0];
-    var sedge = cls[1];
-    var eid = cls[2];
-    var eedge = cls[3];
-    var start = paper.select('#' + sid);
-    var end = paper.select('#' + eid);
+    return a.apply(null, cls);
+  }
 
-    var s = getConnectPoint(start, sedge);
-    var e = getConnectPoint(end, eedge);
-
-    var a = arrow(s, e);
+  function redraw(elem) {
+    var a = newArrow(getArrowInfo(elem));
     elem.select('.shaft').attr({
-      d: a.shaftPath(s, e)
+      d: a.shaftPath()
     });
     elem.select('.tip').attr({
-      d: a.tipPath(s, e)
+      d: a.tipPath()
     });
   }
 
@@ -190,25 +182,23 @@
   var tipH = 16;
   var tipW = 10;
 
-  function addConnectorArrow(start, startEdge, end, endEdge) {
+  function newArrow(arrowInfo) {
+    var start = paper.select('#' + arrowInfo.start);
+    var startEdge = arrowInfo.startEdge;
+    var end = paper.select('#' + arrowInfo.end);
+    var endEdge = arrowInfo.endEdge;
+
     if (!start || !end) {
-      return;
+      return arrow();
     }
 
     var s = getConnectPoint(start, startEdge);
     var e = getConnectPoint(end, endEdge);
-
-    arrow(s, e).draw(s, e);
+    return arrow(s, e);
   }
 
-  function drawer(pathFn) {
-    return {
-      draw: function(s, e) {
-        arrow_(s, e, pathFn);
-      },
-      shaftPath: pathFn,
-      tipPath: tipPath
-    };
+  function addConnectorArrow(arrowInfo) {
+    newArrow(arrowInfo).draw();
   }
 
   var threshold = Math.tan(15 / 180 * Math.PI);
@@ -217,10 +207,33 @@
     return Math.abs((e.x - s.x) / (e.y - s.y)) < threshold;
   }
 
+  function Arrow(s, e) {
+    this.s = s;
+    this.e = e;
+  }
+
+  Arrow.prototype.with = function(pathFn) {
+    this.pathFn = pathFn;
+    return this;
+  };
+
+  Arrow.prototype.draw = function() {
+    arrow_(this.s, this.e, this.pathFn);
+  };
+
+  Arrow.prototype.shaftPath = function() {
+    return this.pathFn(this.s, this.e);
+  };
+
+  Arrow.prototype.tipPath = function() {
+    return tipPath(this.s, this.e);
+  };
+
   function arrow(s, e) {
+    var a = new Arrow(s, e);
     switch (s.edge + '-' + e.edge) {
     case 'bottom-top':
-      return drawer(function(s, e) {
+      return a.with(function(s, e) {
         if (e.y - s.y > 0 && isNearVertical(s, e)) {
           return straight(s, e);
         }
@@ -228,14 +241,14 @@
       });
     case 'left-top':
     case 'right-top':
-      return drawer(function(s, e) {
+      return a.with(function(s, e) {
         return fmt('M %s %s S %s %s %s %s',
           s.x, s.y,
           e.x, s.y,
           e.x, e.y);
       });
     }
-    return drawer(function() {});
+    return a.with(function() { return ''; });
   }
 
   function p(x, y, edge, id) {
@@ -303,7 +316,7 @@
 
   function tipPath(s, e) {
     return fmt('M %s %s l %s %s %s -%s',
-        e.x - tipW,  e.y - tipH, tipW, tipH, tipW, tipH)
+        e.x - tipW,  e.y - tipH, tipW, tipH, tipW, tipH);
   }
 
   function tip(s, e) {
