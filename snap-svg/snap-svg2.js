@@ -284,8 +284,7 @@
   }
 
   function roundDiff(v) {
-    v += 100;
-    return Math.min(Math.max(Math.abs(v) / 2, 50), 150);
+    return minmax(Math.abs(v + 100) / 2, 50, 100);
   }
 
   function build(shaft, tip, info) {
