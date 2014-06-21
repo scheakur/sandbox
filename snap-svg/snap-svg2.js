@@ -218,7 +218,7 @@
   }
 
   function arrow(s, e) {
-    switch (s.e + '-' + e.e) {
+    switch (s.edge + '-' + e.edge) {
     case 'bottom-top':
       return drawer(function(s, e) {
         if (e.y - s.y > 0 && isNearVertical(s, e)) {
@@ -238,11 +238,11 @@
     return drawer(function() {});
   }
 
-  function p(x, y, e, id) {
+  function p(x, y, edge, id) {
     return {
       x: x,
       y: y,
-      e: e,
+      edge: edge,
       id: id
     };
   }
@@ -290,7 +290,7 @@
   function build(shaft, tip, info) {
     paper.group(shaft, tip).attr({
       class: info.map(function(i) {
-        return i.id + ' ' + i.e;
+        return i.id + ' ' + i.edge;
       }).join(' ')
     });
   }
