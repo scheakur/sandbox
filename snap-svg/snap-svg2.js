@@ -198,12 +198,17 @@
     };
   }
 
+  var threshold = Math.tan(15 / 180 * Math.PI);
+
+  function isNearVertical(s, e) {
+    return Math.abs((e.x - s.x) / (e.y - s.y)) < threshold;
+  }
+
   function arrow(s, e) {
     switch (s.e + '-' + e.e) {
     case 'bottom-top':
       return drawer(function(s, e) {
-        var threshold = 20;
-        if (Math.abs(e.x - s.x) < threshold || Math.abs(e.y - s.y) < threshold) {
+        if (e.y - s.y > 0 && isNearVertical(s, e)) {
           return straight(s, e);
         }
         return curve(s, e);
