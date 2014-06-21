@@ -1,7 +1,7 @@
 /*global Snap*/
 /*jshint newcap:false*/
 
-(function() {
+(function(global) {
   'use strict';
   var paper, last;
 
@@ -9,15 +9,10 @@
   var height = 200;
   var center = width / 2;
 
-  var fns = [
-    function() {
-      paper = Snap(width, height);
-    },
-
-    function() {
-      draw(boxes, arrows);
-    }
-  ];
+  global.main = function() {
+    paper = Snap(width, height);
+    draw(boxes, arrows);
+  };
 
   function b(id, text, y, x) {
     return {
@@ -325,21 +320,4 @@
     });
   }
 
-
-  var interval = 300;
-
-  function doAll() {
-    var p = Promise.resolve();
-    fns.forEach(function(fn) {
-      p = p.then(function() {
-        return new Promise(function(resolve) {
-          setTimeout(function() {
-            resolve();
-          }, interval);
-        });
-      }).then(fn);
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', doAll);
-})();
+})(this);
