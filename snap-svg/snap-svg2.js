@@ -337,9 +337,12 @@
         x, y, p1.x, p1.y, x, y, p2.x, p2.y);
   }
 
-  function rot(x, y, r) {
-    var x2 = x * Math.cos(r / 180 * Math.PI) - y * Math.sin(r / 180 * Math.PI);
-    var y2 = x * Math.sin(r / 180 * Math.PI) + y * Math.cos(r / 180 * Math.PI);
+  function rot(x, y, angle) {
+    var r = angle / 180 * Math.PI;
+    var c = Math.cos(r);
+    var s = Math.sin(r);
+    var x2 = x * c - y * s;
+    var y2 = x * s + y * c;
     x2 = Math.round(x2 * 100) / 100;
     y2 = Math.round(y2 * 100) / 100;
     return {
