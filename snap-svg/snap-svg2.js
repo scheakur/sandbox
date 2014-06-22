@@ -59,9 +59,9 @@
     a('box-id-04', 'right',  'box-id-06', 'top'),
     a('box-id-05', 'bottom', 'box-id-07', 'top'),
     a('box-id-06', 'bottom', 'box-id-07', 'top'),
-    a('box-id-07', 'bottom', 'box-id-08', 'top'),
+    a('box-id-07', 'bottom', 'box-id-08', 'right'),
     a('box-id-07', 'bottom', 'box-id-09', 'top'),
-    a('box-id-07', 'bottom', 'box-id-10', 'top')
+    a('box-id-07', 'bottom', 'box-id-10', 'left')
   ];
 
   function draw(bs, as) {
@@ -243,22 +243,31 @@
         }
         return curve(s, e);
       });
-    case 'left-top':
     case 'right-top':
+    case 'left-top':
       return a.with(function(s, e) {
         return fmt('M %s %s S %s %s %s %s',
           s.x, s.y,
           e.x, s.y,
           e.x, e.y);
       });
+    case 'bottom-right':
+    case 'bottom-left':
+      return a.with(function(s, e) {
+        return fmt('M %s %s S %s %s %s %s',
+          s.x, s.y,
+          s.x, e.y,
+          e.x, e.y);
+      });
     }
     return a.with(function() { return ''; });
   }
 
-  function p(x, y, edge, id) {
+  function p(x, y, r, edge, id) {
     return {
       x: x,
       y: y,
+      r: r,
       edge: edge,
       id: id
     };
@@ -269,13 +278,13 @@
     var id = elem.node.id;
     switch (edge) {
     case 'top':
-      return p(b.cx, b.y, edge, id);
+      return p(b.cx, b.y, 0, edge, id);
     case 'right':
-      return p(b.x2, b.cy, edge, id);
+      return p(b.x2, b.cy, 90, edge, id);
     case 'bottom':
-      return p(b.cx, b.y2, edge, id);
+      return p(b.cx, b.y2, 180, edge, id);
     case 'left':
-      return p(b.x, b.cy, edge, id);
+      return p(b.x, b.cy, -90, edge, id);
     }
     return p(0, 0, 'bottom', '');
   }
@@ -319,8 +328,24 @@
   }
 
   function tipPath(s, e) {
-    return fmt('M %s %s l %s %s %s -%s',
-        e.x - tipW,  e.y - tipH, tipW, tipH, tipW, tipH);
+    var x = e.x;
+    var y = e.y;
+    var p1 = rot(-tipW, -tipH, e.r);
+    var p2 = rot(tipW, -tipH, e.r);
+
+    return fmt('M %s %s l %s %s M %s %s l %s %s',
+        x, y, p1.x, p1.y, x, y, p2.x, p2.y);
+  }
+
+  function rot(x, y, r) {
+    var x2 = x * Math.cos(r / 180 * Math.PI) - y * Math.sin(r / 180 * Math.PI);
+    var y2 = x * Math.sin(r / 180 * Math.PI) + y * Math.cos(r / 180 * Math.PI);
+    x2 = Math.round(x2 * 100) / 100;
+    y2 = Math.round(y2 * 100) / 100;
+    return {
+      x: x2,
+      y: y2
+    };
   }
 
   function tip(s, e) {
