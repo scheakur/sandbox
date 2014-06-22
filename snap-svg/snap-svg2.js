@@ -61,7 +61,9 @@
     a('box-id-06', 'bottom', 'box-id-07', 'top'),
     a('box-id-07', 'bottom', 'box-id-08', 'right'),
     a('box-id-07', 'bottom', 'box-id-09', 'top'),
-    a('box-id-07', 'bottom', 'box-id-10', 'left')
+    a('box-id-07', 'bottom', 'box-id-10', 'left'),
+    a('box-id-08', 'left',   'box-id-05', 'left'),
+    a('box-id-10', 'right',  'box-id-06', 'right'),
   ];
 
   function draw(bs, as) {
@@ -257,6 +259,24 @@
         return fmt('M %s %s S %s %s %s %s',
           s.x, s.y,
           s.x, e.y,
+          e.x, e.y);
+      });
+    case 'right-right':
+      return a.with(function(s, e) {
+        var x = s.x > e.x ? s.x : e.x;
+        return fmt('M %s %s C %s %s %s %s %s %s %s %s',
+          s.x, s.y,
+          x + 100, s.y,
+          x + 100, e.y,
+          e.x, e.y);
+      });
+    case 'left-left':
+      return a.with(function(s, e) {
+        var x = s.x < e.x ? s.x : e.x;
+        return fmt('M %s %s C %s %s %s %s %s %s %s %s',
+          s.x, s.y,
+          x - 100, s.y,
+          x - 100, e.y,
           e.x, e.y);
       });
     }
