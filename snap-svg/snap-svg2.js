@@ -77,26 +77,35 @@
     return (el) ? el.getBBox().y2 : 0;
   }
 
-  function addTextBox(id, text, x, y, start) {
-    x = x || center;
-    y = y || bottom(start || last);
-    var margin = 120;
-    var t = paper.text(x, y + margin, text);
-    t.attr({
+  function textAt(x, y, text) {
+    var t = paper.text(x, y, text).attr({
       class: 'box-text'
     });
     t.selectAll('tspan:nth-child(n+2)').attr({
       x: x,
       dy: 40
     });
-    var b = t.getBBox();
+    return t;
+  }
+
+  function boxAround(textElem) {
+    var b = textElem.getBBox();
     var padding = 10;
-    var r = paper.rect(b.x - padding, b.y - padding, b.w + 2 * padding, b.h + 2 * padding, 5, 5);
-    r.attr({
+    return paper.rect(
+      b.x - padding, b.y - padding, b.w + 2 * padding, b.h + 2 * padding, 5, 5
+    ).attr({
       class: 'box'
     });
+  }
 
-    var g = paper.group(r, t).attr({
+  function addTextBox(id, text, x, y, start) {
+    x = x || center;
+    y = y || bottom(start || last);
+    var margin = 120;
+    var t = textAt(x, y + margin, text);
+    var b = boxAround(t);
+
+    var g = paper.group(b, t).attr({
       id: id
     });
 
