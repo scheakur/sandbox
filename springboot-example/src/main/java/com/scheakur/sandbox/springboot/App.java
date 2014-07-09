@@ -20,7 +20,16 @@ public class App {
             String name,
             Model model) {
         model.addAttribute("name", name);
-        return "/hi";
+        return "hi";
+    }
+
+    @RequestMapping("/hi/hi")
+    public String hi2(
+            @RequestParam(value="name", required=false, defaultValue="scheakur")
+            String name,
+            Model model) {
+        model.addAttribute("name", name);
+        return "hi/hi";
     }
 
 }
