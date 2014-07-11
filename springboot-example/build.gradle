@@ -6,15 +6,24 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.4.RELEASE")
+		classpath("org.springframework:springloaded:1.2.0.RELEASE")
 	}
 }
 
 apply plugin: 'java'
 apply plugin: 'spring-boot'
+apply plugin: 'idea'
 
 jar {
 	baseName = 'springboot-example'
 	version =  '0.0.1-SNAPSHOT'
+}
+
+idea {
+	module {
+		inheritOutputDirs = false
+		outputDir = file("$buildDir/classes/main/")
+	}
 }
 
 repositories {
