@@ -2,12 +2,14 @@ package com.scheakur.sandbox.springboot;
 
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @EnableAutoConfiguration
+@ComponentScan
 public class App {
 
     public static void main(final String... args) {
