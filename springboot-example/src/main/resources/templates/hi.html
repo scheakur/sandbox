@@ -5,7 +5,7 @@
     <title>Hi</title>
   </head>
   <body>
-    <h1>Hi Spring Boot</h1>
+    <h1 th:text="#{hi.title}">Hi Spring Boot</h1>
     <div th:text="'Hi, ' + ${name} + '!'"></div>
   </body>
 </html>
