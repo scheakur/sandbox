@@ -7,5 +7,11 @@
   <body>
     <h1 th:text="#{hi.title}">Hi Spring Boot</h1>
     <div th:text="'Hi, ' + ${name} + '!'"></div>
+    <form method="POST" action="#" th:action="@{/hi}" th:object="${data}">
+      <div th:each="el, stat : *{list}">
+        <input type="text" th:field="*{list[__${stat.index}__]}"/>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
   </body>
 </html>

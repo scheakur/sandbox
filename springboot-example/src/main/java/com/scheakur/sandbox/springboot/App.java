@@ -16,13 +16,21 @@ public class App {
         SpringApplication.run(App.class, args);
     }
 
-    @RequestMapping("/hi")
+    @RequestMapping(value="/hi", method=RequestMethod.GET)
     public String hi(
             @RequestParam(value="name", required=false, defaultValue="scheakur")
             String name,
             Model model) {
         model.addAttribute("name", name);
+        Data data = Data.with(3);
+        model.addAttribute("data", data);
         return "hi";
+    }
+
+    @RequestMapping(value="/hi", method=RequestMethod.POST)
+    public String postHi(Data data, Model model) {
+        model.addAttribute("data", data);
+        return "data";
     }
 
     @RequestMapping("/hi/hi")
