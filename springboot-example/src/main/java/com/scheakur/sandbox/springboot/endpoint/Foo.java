@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Configuration
-public class PostFoo {
+public class Foo {
 
     public static class FooEndpoint extends AbstractEndpoint<String> {
 
