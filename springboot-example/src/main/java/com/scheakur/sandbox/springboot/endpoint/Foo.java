@@ -5,6 +5,7 @@ import org.springframework.boot.actuate.endpoint.mvc.EndpointMvcAdapter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,6 +37,12 @@ public class Foo {
         @Override
         public Object invoke() {
             return super.invoke();
+        }
+
+        @RequestMapping(value = "/{name:.*}", method = RequestMethod.GET)
+        @ResponseBody
+        public Object value(@PathVariable String name) {
+            return "This is foo MVC endpoint: " + name;
         }
 
     }
