@@ -11,10 +11,10 @@ function _quicksort(bottom, top, arr) {
   var lower = bottom;
   var upper = top;
   while (true) {
-    while (arr[lower] <= pivot) {
+    while (arr[lower] <= pivot && lower <= upper) {
       lower++;
     }
-    while (arr[upper] > pivot) {
+    while (arr[upper] > pivot && lower <= upper) {
       upper--;
     }
     if (lower >= upper) {
