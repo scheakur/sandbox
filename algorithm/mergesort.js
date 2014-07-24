@@ -3,27 +3,28 @@ function mergesort(arr) {
   return arr;
 }
 
-function _mergesort(start, n, arr) {
-  if (n <= 1) {
+
+function _mergesort(start, num, arr) {
+  if (num <= 1) {
     return;
   }
 
-  var m = Math.floor(n / 2);
+  var m = Math.floor(num / 2);
 
   _mergesort(start, m, arr);
-  _mergesort(start + m, n - m, arr);
+  _mergesort(start + m, num - m, arr);
 
   var i, j, k;
   var buffer = new Array(m);
-  for (var i = 0; i < m; i++) {
-    buffer[i] = arr[i + start];
+  for (i = 0; i < m; i++) {
+    buffer[i] = arr[start + i];
   }
 
-  j = m;
   i = 0;
+  j = m;
   k = 0;
 
-  while (i < m && j < n) {
+  while (i < m && j < num) {
     if (buffer[i] <= arr[j + start]) {
       arr[start + k++] = buffer[i++];
     } else {
