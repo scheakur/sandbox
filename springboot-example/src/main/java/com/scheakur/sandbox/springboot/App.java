@@ -1,12 +1,14 @@
 package com.scheakur.sandbox.springboot;
 
-import org.springframework.boot.*;
-import org.springframework.boot.autoconfigure.*;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.*;
-import org.springframework.ui.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import javax.servlet.Filter;
@@ -21,10 +23,7 @@ public class App {
     }
 
     @RequestMapping(value="/hi", method=RequestMethod.GET)
-    public String hi(
-            @RequestParam(value="name", required=false, defaultValue="scheakur")
-            String name,
-            Model model) {
+    public String hi(@RequestParam(value="name", required=false, defaultValue="scheakur") String name, Model model) {
         model.addAttribute("name", name);
         Data data = Data.with(3);
         model.addAttribute("data", data);
@@ -38,10 +37,7 @@ public class App {
     }
 
     @RequestMapping("/hi/hi")
-    public String hi2(
-            @RequestParam(value="name", required=false, defaultValue="scheakur")
-            String name,
-            Model model) {
+    public String hi2(@RequestParam(value="name", required=false, defaultValue="scheakur") String name, Model model) {
         model.addAttribute("name", name);
         return "hi/hi";
     }
