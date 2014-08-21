@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Drag & Drop</title>
+    <style>
+      .draggable {
+        width: 200px;
+        height: 20px;
+        text-align: center;
+      }
+      .droppable {
+        width: 200px;
+        height: 20px;
+        background: #ccc;
+        margin: 10px;
+        padding: 10px;
+      }
+      .shadow {
+        background: #999;
+      }
+    </style>
+    <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        var draggable = document.querySelector('.draggable');
+
+        draggable.addEventListener('dragstart', function(event) {
+          event.dataTransfer.setData('text/plain', null);
+        });
+
+
+        var dragging;
+
+        document.addEventListener('dragstart', function(event) {
+          dragging = event.target;
+          event.target.style.opacity = 0.5;
+        }, false);
+
+        document.addEventListener('dragend', function(event) {
+          event.target.style.opacity = 1;
+        }, false);
+
+        document.addEventListener('dragover', function(event) {
+          event.preventDefault();
+        }, false);
+
+        document.addEventListener('dragenter', function(event) {
+          if (isDroppable(event.target)) {
+            event.target.classList.add('shadow');
+          }
+        }, false);
+
+        document.addEventListener('dragleave', function(event) {
+          if (isDroppable(event.target)) {
+            event.target.classList.remove('shadow');
+          }
+        }, false);
+
+        document.addEventListener('drop', function(event) {
+          event.preventDefault();
+          if (isDroppable(event.target)) {
+            event.target.classList.remove('shadow');
+            dragging.parentNode.removeChild(dragging);
+            event.target.appendChild(dragging);
+          }
+        }, false);
+
+        function isDroppable(el) {
+          return el.classList.contains('droppable');
+        }
+      }, false);
+    </script>
+  </head>
+  <body>
+    <div class="droppable">
+        <div class="draggable" draggable="true">This text is draggable</div>
+    </div>
+    <div class="droppable"></div>
+    <div class="droppable"></div>
+    <div class="droppable"></div>
+    <div class="droppable"></div>
+  </body>
+</html>
+
