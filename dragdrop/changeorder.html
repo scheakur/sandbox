@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Drag & Drop</title>
+    <style>
+      .draggable {
+        width: 200px;
+        height: 20px;
+        background: #ccc;
+        text-align: center;
+        margin: 10px;
+        padding: 10px;
+      }
+      .droppable {
+        width: 200px;
+        height: 20px;
+        background: #ccc;
+        margin: 10px;
+        padding: 10px;
+      }
+      .dragging {
+        opacity: 0.5;
+      }
+      .shadow {
+        background: #999;
+      }
+    </style>
+    <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        var dragging;
+
+        document.addEventListener('dragstart', function(event) {
+          if (isDraggable(event.target)) {
+            dragging = event.target;
+            event.dataTransfer.setData('text/plain', null);
+            event.target.classList.add('dragging');
+          }
+        }, false);
+
+        document.addEventListener('dragend', function(event) {
+          event.target.classList.remove('dragging');
+        }, false);
+
+        document.addEventListener('dragover', function(event) {
+          event.preventDefault();
+        }, false);
+
+        document.addEventListener('dragenter', function(event) {
+          if (isDraggable(event.target)) {
+            event.target.classList.add('shadow');
+          }
+        }, false);
+
+        document.addEventListener('dragleave', function(event) {
+          if (isDraggable(event.target)) {
+            event.target.classList.remove('shadow');
+          }
+        }, false);
+
+        document.addEventListener('drop', function(event) {
+          event.preventDefault();
+          if (isDraggable(event.target) && event.target !== dragging) {
+            var container = dragging.parentNode;
+            var fromUpper = dragging.offsetTop - event.target.offsetTop < 0;
+            event.target.classList.remove('shadow');
+            container.removeChild(dragging);
+            if (fromUpper) {
+              container.insertBefore(dragging, event.target.nextElementSibling);
+            } else {
+              container.insertBefore(dragging, event.target);
+            }
+          }
+        }, false);
+
+        function isDraggable(el) {
+          return el.classList.contains('draggable');
+        }
+      }, false);
+    </script>
+  </head>
+  <body>
+    <div draggable="true" class="draggable">1</div>
+    <div draggable="true" class="draggable">2</div>
+    <div draggable="true" class="draggable">3</div>
+    <div draggable="true" class="draggable">4</div>
+    <div draggable="true" class="draggable">5</div>
+  </body>
+</html>
+
+
