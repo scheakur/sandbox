@@ -9,6 +9,12 @@
         height: 20px;
         text-align: center;
       }
+      .draggable:hover {
+        cursor: move;
+      }
+      .dragging {
+        opacity: 0.5;
+      }
       .droppable {
         width: 200px;
         height: 20px;
@@ -33,11 +39,11 @@
 
         document.addEventListener('dragstart', function(event) {
           dragging = event.target;
-          event.target.style.opacity = 0.5;
+          event.target.classList.add('dragging');
         }, false);
 
         document.addEventListener('dragend', function(event) {
-          event.target.style.opacity = 1;
+          event.target.classList.remove('dragging');
         }, false);
 
         document.addEventListener('dragover', function(event) {
