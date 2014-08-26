@@ -142,8 +142,7 @@ History.prototype.of = function(index) {
   return this;
 };
 
-History.prototype.toString = function(index) {
-  var hash = this.history[index];
+History.prototype.toString = function(hash) {
   var process = [
     '=======',
     toPrettyString(hash),
@@ -167,8 +166,7 @@ function solve(puzzle) {
     if (puzzle.toHash() === '0123456789abcdef') {
       return {
         puzzle: puzzle,
-        history: history,
-        index: tryIndex
+        history: history
       };
     }
     for (var i = 0; i < 4; i++) {
@@ -192,7 +190,7 @@ function main() {
   var solved = solve(puzzle);
 
   if (solved) {
-    console.log(solved.history.toString(solved.index));
+    console.log(solved.history.toString(solved.puzzle.toHash()));
     console.log(solved.puzzle.toString());
   } else {
     console.log('unsolved');
