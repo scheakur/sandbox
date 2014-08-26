@@ -91,8 +91,12 @@ Puzzle.prototype.moveSpace = function(direction) {
       this.spaceIndex -= 1;
       return true;
     default:
-      return;
+      return false;
   }
+};
+
+Puzzle.prototype.moveBackSpace = function(direction) {
+  return this.moveSpace((direction + 2) % 4);
 };
 
 Puzzle.prototype.swap = function(a, b) {
@@ -169,13 +173,13 @@ function solve(puzzle) {
         history: history
       };
     }
-    for (var i = 0; i < 4; i++) {
-      if (!puzzle.moveSpace(i)) {
+    for (var direction = 0; direction < 4; direction++) {
+      if (!puzzle.moveSpace(direction)) {
         continue;
       }
       history.push(puzzle, hash);
       // revert
-      puzzle.moveSpace((i + 2) % 4);
+      puzzle.moveBackSpace(direction);
     }
     tryIndex++;
   }
