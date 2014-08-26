@@ -125,7 +125,7 @@ History.prototype.push = function(puzzle, from) {
     return false;
   }
   this.history.push(hash);
-  this.keys[hash] = from;
+  this.keys[hash] = from || 'start';
   return true;
 };
 
@@ -158,7 +158,7 @@ History.prototype.toString = function(hash) {
 
 function solve(puzzle) {
   var history = new History();
-  history.push(puzzle, 'start');
+  history.push(puzzle);
   var tryIndex = 0;
   while (tryIndex < history.size()) {
     var hash = history.get(tryIndex);
