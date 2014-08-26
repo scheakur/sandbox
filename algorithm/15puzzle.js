@@ -133,8 +133,17 @@ History.prototype.size = function() {
   return this.history.length;
 };
 
-History.prototype.toString = function() {
-  var hash = this.history.pop();
+History.prototype.get = function(index) {
+  return this.history[index];
+};
+
+History.prototype.of = function(index) {
+  this.currentIndex = index;
+  return this;
+};
+
+History.prototype.toString = function(index) {
+  var hash = this.history[index];
   var process = [
     '=======',
     toPrettyString(hash),
@@ -151,26 +160,26 @@ History.prototype.toString = function() {
 function solve(puzzle) {
   var history = new History();
   history.push(puzzle, 'start');
-  var queue = [puzzle.toHash()];
-  while (queue.length > 0) {
-    var hash = queue.shift();
+  var tryIndex = 0;
+  while (tryIndex < history.size()) {
+    var hash = history.get(tryIndex);
     puzzle = Puzzle.fromString(hash);
+    if (puzzle.toHash() === '0123456789abcdef') {
+      return {
+        puzzle: puzzle,
+        history: history,
+        index: tryIndex
+      };
+    }
     for (var i = 0; i < 4; i++) {
       if (!puzzle.moveSpace(i)) {
         continue;
       }
-      if (history.push(puzzle, hash)) {
-        if (puzzle.toHash() === '0123456789abcdef') {
-          return {
-            puzzle: puzzle,
-            history: history
-          };
-        }
-        queue.push(puzzle.toHash());
-      }
+      history.push(puzzle, hash);
       // revert
       puzzle.moveSpace((i + 2) % 4);
     }
+    tryIndex++;
   }
   return null;
 }
@@ -183,7 +192,7 @@ function main() {
   var solved = solve(puzzle);
 
   if (solved) {
-    console.log(solved.history.toString());
+    console.log(solved.history.toString(solved.index));
     console.log(solved.puzzle.toString());
   } else {
     console.log('unsolved');
