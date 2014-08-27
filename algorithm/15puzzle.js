@@ -1,5 +1,5 @@
 function array(n) {
-  return new Array(16).join('.').split('.').map(function(_, i) {
+  return new Array(n).join('.').split('.').map(function(_, i) {
     return i;
   });
 }
