@@ -2,7 +2,7 @@ function shuffle(arr) {
   var a = arr.concat(); // copy array
   var newArr = [];
   while (a.length > 0) {
-    var r = Math.floor(Math.random() * a.length)
+    var r = Math.floor(Math.random() * a.length);
     newArr.push(a[r]);
     a.splice(r, 1);
   }
