@@ -1,7 +1,5 @@
 function array(n) {
-  return new Array(n).join('.').split('.').map(function(_, i) {
-    return i;
-  });
+  return Array.apply(null, {length: n}).map(Number.call, Number);
 }
 
 function toString(pattern) {
