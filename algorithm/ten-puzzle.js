@@ -1,12 +1,15 @@
 function main() {
-  makeNumbers([], 0);
+  makeAndCheckNumbers([], 0);
 }
 
 
-function makeNumbers(numbers, num) {
+function makeAndCheckNumbers(numbers, startingNum) {
   if (numbers.length === 4) {
     var rpn = [];
-    if (makeRPN(0, 0, rpn, numbers)) {
+    var usedIndexes = numbers.map(function() {
+      return false;
+    });
+    if (makeAndCheckRPN(rpn, numbers, 0, 0, usedIndexes)) {
       console.log('Solved', rpn.join(' '));
     } else {
       // console.log('Not solved');
@@ -14,19 +17,18 @@ function makeNumbers(numbers, num) {
     return;
   }
 
-  for (var i = num; i < 10; i++) {
+  for (var i = startingNum; i < 10; i++) {
     numbers.push(i);
-    makeNumbers(numbers, i);
+    makeAndCheckNumbers(numbers, i);
     numbers.pop();
   }
 }
 
 
 var operators = ['+', '-', '*', '/'];
-var issued = [false, false, false, false];
 
 
-function makeRPN(num, exp, rpn, numbers) {
+function makeAndCheckRPN(rpn, numbers, num, exp, usedIndexes) {
   if (num + exp === 7) {
     if (solve(rpn)) {
       return true;
@@ -35,10 +37,9 @@ function makeRPN(num, exp, rpn, numbers) {
   }
 
   if (num - exp >= 2) {
-    var n = rpn.length;
     for (var i = 0; i < operators.length; i++) {
       rpn.push(operators[i]);
-      if (makeRPN(num, exp + 1, rpn, numbers)) {
+      if (makeAndCheckRPN(rpn, numbers, num, exp + 1, usedIndexes)) {
         return true;
       }
       rpn.pop();
@@ -46,16 +47,16 @@ function makeRPN(num, exp, rpn, numbers) {
   }
 
   if (num <= 3) {
-    for (var i = 0; i < 4; i++) {
-      if (!issued[i]) {
-        issued[i] = true;
+    for (var i = 0; i < numbers.length; i++) {
+      if (!usedIndexes[i]) {
+        usedIndexes[i] = true;
         rpn.push(numbers[i]);
-        if (makeRPN(num + 1, exp, rpn, numbers)) {
-          issued[i] = false;
+        if (makeAndCheckRPN(rpn, numbers, num + 1, exp, usedIndexes)) {
+          usedIndexes[i] = false;
           return true;
         }
         rpn.pop();
-        issued[i] = false;
+        usedIndexes[i] = false;
       }
     }
   }
