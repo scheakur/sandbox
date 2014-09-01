@@ -91,39 +91,38 @@ function calcRPN(rpn) {
     if (/[0-9]/.test(ch)) {
       stack.push(f(1, ch));
     } else {
-      var f1 = stack.pop();
-      var f2 = stack.pop();
-
-      switch (ch) {
-        case '+':
-          stack.push(
-            f(f1.denominator * f2.denominator,
-              f2.numerator * f1.denominator + f1.numerator * f2.denominator));
-          break;
-        case '-':
-          stack.push(
-            f(f1.denominator * f2.denominator,
-              f2.numerator * f1.denominator - f1.numerator * f2.denominator));
-          break;
-        case '*':
-          stack.push(
-            f(f1.denominator * f2.denominator,
-              f2.numerator * f1.numerator));
-          break;
-        case '/':
-          if (f2.denominator * f1.numerator === 0) {
-            return null;
-          }
-          stack.push(
-            f(f2.denominator * f1.numerator,
-              f2.numerator * f1.denominator));
-          break;
+      var n1 = stack.pop();
+      var n2 = stack.pop();
+      var n = calc(n1, n2, ch);
+      if (n === null) {
+        return null;
       }
+      stack.push(n);
     }
     c++;
   }
 
   return stack.pop();
+}
+
+
+function calc(n1, n2, op) {
+  switch (op) {
+    case '+':
+      return f(n1.denominator * n2.denominator,
+          n2.numerator * n1.denominator + n1.numerator * n2.denominator);
+    case '-':
+      return f(n1.denominator * n2.denominator,
+          n2.numerator * n1.denominator - n1.numerator * n2.denominator);
+    case '*':
+      return f(n1.denominator * n2.denominator, n2.numerator * n1.numerator);
+    case '/':
+      if (n2.denominator * n1.numerator === 0) {
+        return null;
+      }
+      return f(n2.denominator * n1.numerator, n2.numerator * n1.denominator);
+  }
+  return null;
 }
 
 
