@@ -87,19 +87,20 @@ function calcRPN(rpn) {
   var stack = [];
   var c = 0;
   while (c != rpn.length) {
-    var ch = rpn[c];
+    var ch = rpn[c++];
+
     if (/[0-9]/.test(ch)) {
       stack.push(f(1, ch));
-    } else {
-      var n1 = stack.pop();
-      var n2 = stack.pop();
-      var n = calc(n1, n2, ch);
-      if (n === null) {
-        return null;
-      }
-      stack.push(n);
+      continue;
     }
-    c++;
+
+    var n1 = stack.pop();
+    var n2 = stack.pop();
+    var n = calc(n1, n2, ch);
+    if (n === null) {
+      return null;
+    }
+    stack.push(n);
   }
 
   return stack.pop();
