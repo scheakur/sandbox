@@ -30,34 +30,18 @@ var operators = ['+', '-', '*', '/'];
 
 function makeAndCheckRPN(rpn, numbers, num, exp, usedIndexes) {
   if (num + exp === 7) {
-    if (solve(rpn)) {
-      return true;
-    }
-    return false;
+    return solve(rpn);
   }
 
   if (num - exp >= 2) {
-    for (var i = 0; i < operators.length; i++) {
-      rpn.push(operators[i]);
-      if (makeAndCheckRPN(rpn, numbers, num, exp + 1, usedIndexes)) {
-        return true;
-      }
-      rpn.pop();
+    if (addOperatorAndCheck(rpn, numbers, num, exp, usedIndexes)) {
+      return true;
     }
   }
 
   if (num <= 3) {
-    for (var i = 0; i < numbers.length; i++) {
-      if (!usedIndexes[i]) {
-        usedIndexes[i] = true;
-        rpn.push(numbers[i]);
-        if (makeAndCheckRPN(rpn, numbers, num + 1, exp, usedIndexes)) {
-          usedIndexes[i] = false;
-          return true;
-        }
-        rpn.pop();
-        usedIndexes[i] = false;
-      }
+    if (addNumberAndCheck(rpn, numbers, num, exp, usedIndexes)) {
+      return true;
     }
   }
 
@@ -65,9 +49,39 @@ function makeAndCheckRPN(rpn, numbers, num, exp, usedIndexes) {
 }
 
 
+function addOperatorAndCheck(rpn, numbers, num, exp, usedIndexes) {
+  for (var i = 0; i < operators.length; i++) {
+    rpn.push(operators[i]);
+    if (makeAndCheckRPN(rpn, numbers, num, exp + 1, usedIndexes)) {
+      return true;
+    }
+    rpn.pop();
+  }
+  return false;
+}
+
+
+function addNumberAndCheck(rpn, numbers, num, exp, usedIndexes) {
+  for (var i = 0; i < numbers.length; i++) {
+    if (!usedIndexes[i]) {
+      usedIndexes[i] = true;
+      rpn.push(numbers[i]);
+      if (makeAndCheckRPN(rpn, numbers, num + 1, exp, usedIndexes)) {
+        usedIndexes[i] = false;
+        return true;
+      }
+      rpn.pop();
+      usedIndexes[i] = false;
+    }
+  }
+  return false;
+}
+
+
 function solve(rpn) {
   return checkResult(calcRPN(rpn));
 }
+
 
 function calcRPN(rpn) {
   var stack = [];
@@ -132,8 +146,10 @@ function Fraction(denominator, numerator) {
   this.denominator = denominator;
 }
 
+
 function f(d, n) {
   return new Fraction(Number(d), Number(n));
 }
+
 
 main();
