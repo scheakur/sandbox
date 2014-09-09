@@ -33,6 +33,6 @@
     return canvas.toDataURL();
   }
 
-  window.addEventListener('DOMContentLoaded', main);
+  window.addEventListener('DOMContentLoaded', main, false);
 
 })(window, document);
