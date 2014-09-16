@@ -1,0 +1,7 @@
+{
+  "name": "node-webkit-hello",
+  "main": "index.html",
+  "scripts": {
+    "start": "node_modules/nodewebkit/bin/nodewebkit"
+  }
+}

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>node-webkit-hello</title>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var text = require('fs').readFileSync('./hello.txt');
+        document.body.innerHTML = text;
+      });
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
