@@ -4,6 +4,9 @@
   "scripts": {
     "start": "node_modules/nodewebkit/bin/nodewebkit"
   },
+  "window": {
+    "toolbar": false
+  },
   "dependencies": {
     "nodewebkit": "^0.10.4"
   }
