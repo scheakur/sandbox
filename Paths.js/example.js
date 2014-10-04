@@ -42,8 +42,38 @@
   }
 
 
+  function newRectangle() {
+    var rect = paths.Rectangle({
+      top: 20,
+      bottom: 120,
+      left: 10,
+      right: 210
+    });
+
+    newSvg().appendChild(newElem('path', {
+      d: rect.path.print(),
+      fill: 'yellow',
+      stroke: 'black',
+      'stroke-width': 5
+    }));
+
+    newSvg().appendChild(newElem('rect', {
+      x: 10,
+      y: 20,
+      width: 200,
+      height: 100,
+      rx: 10,
+      ry: 10,
+      fill: 'yellow',
+      stroke: 'black',
+      'stroke-width': 5
+    }));
+  }
+
+
   function main() {
     newParallelogram();
+    newRectangle();
   }
 
 
