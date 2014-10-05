@@ -22,7 +22,8 @@
     svg().appendChild(newElem('path', {
       d: path.print(),
       stroke: 'black',
-      'stroke-width': 5
+      'stroke-width': 5,
+      'stroke-linecap': 'round'
     }));
   }
 
@@ -39,7 +40,8 @@
       d: path.print(),
       fill: 'yellow',
       stroke: 'black',
-      'stroke-width': 5
+      'stroke-width': 5,
+      'stroke-linejoin': 'round'
     }));
   }
 
