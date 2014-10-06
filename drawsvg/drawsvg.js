@@ -64,7 +64,7 @@
   };
 
   function getCurrentTool() {
-    var tool = document.querySelector('input[name="tool"]:checked').value;
+    var tool = (document.querySelector('input[name="tool"]:checked') || {}).value;
     return tools[tool] || function () {};
   }
 
