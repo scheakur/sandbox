@@ -14,21 +14,26 @@
   }
 
 
-  function drawLine(x1, y1, x2, y2) {
+  function newLine(x1, y1, x2, y2) {
     var path = paths.Path()
       .moveto(x1, y1)
       .lineto(x2, y2);
 
-    svg().appendChild(newElem('path', {
+    return newElem('path', {
       d: path.print(),
       stroke: 'black',
       'stroke-width': 5,
       'stroke-linecap': 'round'
-    }));
+    });
   }
 
 
-  function drawBox(x, y, w, h) {
+  function drawLine(x1, y1, x2, y2) {
+    svg().appendChild(newLine(x1, y1, x2, y2));
+  }
+
+
+  function newBox(x, y, w, h) {
     var path = paths.Path()
       .moveto(x, y)
       .lineto(x + w, y)
@@ -36,14 +41,20 @@
       .lineto(x, y + h)
       .closepath();
 
-    svg().appendChild(newElem('path', {
+    return newElem('path', {
       d: path.print(),
       fill: 'yellow',
       stroke: 'black',
       'stroke-width': 5,
       'stroke-linejoin': 'round'
-    }));
+    });
   }
+
+
+  function drawBox(x, y, w, h) {
+    svg().appendChild(newBox(x, y, w, h));
+  }
+
 
   function pos(event, basePos) {
     return {
