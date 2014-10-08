@@ -64,12 +64,18 @@
   }
 
   var tools = {
-    line: function(start, end, width, height) {
-      drawLine(start.x, start.y, end.x, end.y);
+    line: {
+      draw: function(start, end) {
+        drawLine(start.x, start.y, end.x, end.y);
+      }
     },
-    box: function(start, end, width, height) {
-      if (Math.abs(width) > 10 && Math.abs(height) > 10) {
-        drawBox(start.x, start.y, width, height);
+    box: {
+      draw: function(start, end) {
+        var width = end.x - start.x;
+        var height = end.y - start.y;
+        if (Math.abs(width) > 10 && Math.abs(height) > 10) {
+          drawBox(start.x, start.y, width, height);
+        }
       }
     }
   };
@@ -96,9 +102,7 @@
 
     document.addEventListener('mouseup', function(event) {
       var end = pos(event, basePos);
-      var width = end.x - start.x;
-      var height = end.y - start.y;
-      getCurrentTool()(start, end, width, height);
+      getCurrentTool().draw(start, end);
     }, false);
   }
 
