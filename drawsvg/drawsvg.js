@@ -5,14 +5,27 @@
   }
 
 
+  function merge(a, b) {
+    for (var p in b) {
+      a[p] = b[p];
+    }
+    return a;
+  }
+
+
   function newElem(props) {
     var tag = props.tag;
     var attrs = props.attrs;
     var el = document.createElementNS('http://www.w3.org/2000/svg', tag);
-    for (var key in attrs) {
-      el.setAttribute(key, attrs[key]);
-    }
+    updateElem(el, attrs);
     return el;
+  }
+
+
+  function updateElem(elem, attrs) {
+    for (var key in attrs) {
+      elem.setAttribute(key, attrs[key]);
+    }
   }
 
 
@@ -35,6 +48,14 @@
 
   function drawLine(x1, y1, x2, y2) {
     svg().appendChild(newElem(lineProps(x1, y1, x2, y2)));
+  }
+
+
+  function drawLineShadow(shadow, x1, y1, x2, y2) {
+    var attrs = merge(lineProps(x1, y1, x2, y2).attrs, {
+      stroke: '#999'
+    });
+    updateElem(shadow, attrs);
   }
 
 
@@ -64,6 +85,15 @@
   }
 
 
+  function drawBoxShadow(shadow, x, y, w, h) {
+    var attrs = merge(boxProps(x, y, w, h).attrs, {
+      fill: 'none',
+      stroke: '#999'
+    });
+    updateElem(shadow, attrs);
+  }
+
+
   function pos(event, basePos) {
     return {
       x: event.pageX - basePos.x,
@@ -71,26 +101,75 @@
     };
   }
 
+
   var tools = {
     line: {
+
       draw: function(start, end) {
         drawLine(start.x, start.y, end.x, end.y);
+      },
+
+      drawShadow: function(shadow, start, end) {
+        if (!shadow) {
+          shadow = newShadow('path');
+        }
+        drawLineShadow(shadow, start.x, start.y, end.x, end.y);
       }
+
     },
+
     box: {
+
       draw: function(start, end) {
         var width = end.x - start.x;
         var height = end.y - start.y;
         if (Math.abs(width) > 10 && Math.abs(height) > 10) {
           drawBox(start.x, start.y, width, height);
         }
+      },
+
+      drawShadow: function(shadow, start, end) {
+        var width = end.x - start.x;
+        var height = end.y - start.y;
+        if (Math.abs(width) > 10 && Math.abs(height) > 10) {
+          if (!shadow) {
+            shadow = newShadow('path');
+          }
+          drawBoxShadow(shadow, start.x, start.y, width, height);
+        }
       }
+
     }
   };
+
 
   function getCurrentTool() {
     var tool = (document.querySelector('input[name="tool"]:checked') || {}).value;
     return tools[tool] || function () {};
+  }
+
+
+  function newShadow(tag) {
+    var s = newElem({
+      tag: tag,
+      attrs: {
+        class: 'shadow'
+      }
+    });
+    svg().appendChild(s);
+    return s;
+  }
+
+  function getShadow() {
+    return document.querySelector('.shadow');
+  }
+
+
+  function removeShadow() {
+    var shadow = getShadow();
+    if (shadow) {
+      shadow.parentNode.removeChild(shadow);
+    }
   }
 
 
@@ -108,9 +187,20 @@
       start = pos(event, basePos);
     }, false);
 
+    document.addEventListener('mousemove', function(event) {
+      if (!start) {
+        return;
+      }
+      var end = pos(event, basePos);
+      var shadow = getShadow();
+      getCurrentTool().drawShadow(shadow, start, end);
+    }, false);
+
     document.addEventListener('mouseup', function(event) {
       var end = pos(event, basePos);
       getCurrentTool().draw(start, end);
+      start = null;
+      removeShadow();
     }, false);
   }
 
