@@ -193,13 +193,13 @@
       start = pos(event, basePos);
     }, false);
 
-    document.addEventListener('mousemove', function(event) {
+    document.addEventListener('mousemove', throttle(function(event) {
       if (!start) {
         return;
       }
       var end = pos(event, basePos);
       getCurrentTool().drawShadow(start, end);
-    }, false);
+    }, 10, 200), false);
 
     document.addEventListener('mouseup', function(event) {
       var end = pos(event, basePos);
@@ -207,6 +207,30 @@
       start = null;
       removeShadow();
     }, false);
+  }
+
+
+  var args = [];
+  var seq = 0;
+  function throttle(fn, times, maxDelay) {
+    var n = 0;
+    var timeout = null;
+    var s = seq++;
+    return function() {
+      args[s] = arguments;
+      if (!timeout) {
+        timeout = setTimeout(function() {
+          n = 0;
+          timeout = null;
+          fn.apply(null, args[s]);
+        }, maxDelay);
+      }
+      if (n++ > times) {
+        n = 0;
+        timeout = null;
+        fn.apply(null, args[s]);
+      }
+    };
   }
 
 
