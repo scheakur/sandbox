@@ -122,7 +122,7 @@
       draw: function(start, end) {
         var width = end.x - start.x;
         var height = end.y - start.y;
-        if (Math.abs(width) > 10 && Math.abs(height) > 10) {
+        if (Math.abs(width) > 10 || Math.abs(height) > 10) {
           drawBox(start.x, start.y, width, height);
         }
       },
@@ -130,9 +130,7 @@
       drawShadow: function(start, end) {
         var width = end.x - start.x;
         var height = end.y - start.y;
-        if (Math.abs(width) > 10 && Math.abs(height) > 10) {
-          drawBoxShadow(start.x, start.y, width, height);
-        }
+        drawBoxShadow(start.x, start.y, width, height);
       }
 
     }
