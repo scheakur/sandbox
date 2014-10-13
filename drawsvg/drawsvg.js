@@ -197,7 +197,7 @@
       }
       var end = pos(event, basePos);
       getCurrentTool().drawShadow(start, end);
-    }, 10, 200), false);
+    }, 10, 100), false);
 
     document.addEventListener('mouseup', function(event) {
       var end = pos(event, basePos);
