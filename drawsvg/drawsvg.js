@@ -98,10 +98,19 @@
 
   function pos(event, basePos) {
     return {
-      x: event.pageX - basePos.x,
-      y: event.pageY - basePos.y
+      x: normalize(event.pageX - basePos.x),
+      y: normalize(event.pageY - basePos.y)
     };
   }
+
+
+
+  function normalize(x) {
+    return Math.floor(x / gridSize) * gridSize;
+  }
+
+
+  var gridSize = 10;
 
 
   var tools = {
