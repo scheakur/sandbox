@@ -131,7 +131,7 @@
       draw: function(start, end) {
         var width = end.x - start.x;
         var height = end.y - start.y;
-        if (Math.abs(width) > 10 || Math.abs(height) > 10) {
+        if (Math.abs(width) > gridSize || Math.abs(height) > gridSize) {
           drawBox(start.x, start.y, width, height);
         }
       },
