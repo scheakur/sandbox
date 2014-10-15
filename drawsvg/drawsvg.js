@@ -72,7 +72,7 @@
       tag: 'path',
       attrs: {
         d: path.print(),
-        fill: 'yellow',
+        fill: 'white',
         stroke: 'black',
         'stroke-width': 5,
         'stroke-linejoin': 'round'
