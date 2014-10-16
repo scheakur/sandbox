@@ -217,28 +217,30 @@
   }
 
 
-  var args = [];
-  var seq = 0;
-  function throttle(fn, times, maxDelay) {
-    var n = 0;
-    var timeout = null;
-    var s = seq++;
-    return function() {
-      args[s] = arguments;
-      if (!timeout) {
-        timeout = setTimeout(function() {
+  var throttle = (function() {
+    var args = [];
+    var seq = 0;
+    return function throttle(fn, times, maxDelay) {
+      var n = 0;
+      var timeout = null;
+      var s = seq++;
+      return function() {
+        args[s] = arguments;
+        if (!timeout) {
+          timeout = setTimeout(function() {
+            n = 0;
+            timeout = null;
+            fn.apply(null, args[s]);
+          }, maxDelay);
+        }
+        if (n++ > times) {
           n = 0;
           timeout = null;
           fn.apply(null, args[s]);
-        }, maxDelay);
-      }
-      if (n++ > times) {
-        n = 0;
-        timeout = null;
-        fn.apply(null, args[s]);
-      }
+        }
+      };
     };
-  }
+  })();
 
 
   window.addEventListener('DOMContentLoaded', main, false);
