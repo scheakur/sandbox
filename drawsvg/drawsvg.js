@@ -133,6 +133,8 @@
         var height = end.y - start.y;
         if (Math.abs(width) > gridSize || Math.abs(height) > gridSize) {
           drawBox(start.x, start.y, width, height);
+        } else {
+          drawBox(start.x, start.y, gridSize * 10, gridSize * 10);
         }
       },
 
