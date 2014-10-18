@@ -96,6 +96,38 @@
   }
 
 
+  function circleProps(x, y, r) {
+    return {
+      tag: 'circle',
+      attrs: {
+        cx: x,
+        cy: y,
+        r: r,
+        fill: 'white',
+        stroke: 'black',
+        'stroke-width': 5,
+        'stroke-linejoin': 'round'
+      }
+    };
+  }
+
+
+  function drawCircle(x, y, r) {
+    svg().appendChild(newElem(circleProps(x, y, r)));
+  }
+
+
+  function drawCircleShadow(x, y, r) {
+    var props = circleProps(x, y, r);
+    var shadow = forceGetShadow(props.tag);
+    var attrs = merge(props.attrs, {
+      fill: 'none',
+      stroke: '#999'
+    });
+    updateElem(shadow, attrs);
+  }
+
+
   function pos(event, basePos) {
     return {
       x: normalize(event.pageX - basePos.x),
@@ -107,6 +139,11 @@
 
   function normalize(x) {
     return Math.floor(x / gridSize) * gridSize;
+  }
+
+
+  function distance(a, b) {
+    return Math.sqrt(Math.pow(b.x - a.x, 2) + Math.pow(b.y - a.y, 2));
   }
 
 
@@ -142,6 +179,21 @@
         var width = end.x - start.x;
         var height = end.y - start.y;
         drawBoxShadow(start.x, start.y, width, height);
+      }
+
+    },
+
+    circle: {
+
+      draw: function(start, end) {
+        var r = distance(start, end);
+        r = (r <= gridSize) ? (gridSize * 5) : r;
+        drawCircle(start.x, start.y, r);
+      },
+
+      drawShadow: function(start, end) {
+        var r = distance(start, end);
+        drawCircleShadow(start.x, start.y, r);
       }
 
     }
