@@ -165,13 +165,12 @@
     box: {
 
       draw: function(start, end) {
-        var width = end.x - start.x;
-        var height = end.y - start.y;
-        if (Math.abs(width) > gridSize || Math.abs(height) > gridSize) {
-          drawBox(start.x, start.y, width, height);
-        } else {
-          drawBox(start.x, start.y, gridSize * 10, gridSize * 10);
+        var width = (end.x - start.x) || gridSize;
+        var height = (end.y - start.y) || gridSize;
+        if (Math.abs(width) <= gridSize && Math.abs(height) <= gridSize) {
+          width = height = gridSize * 10;
         }
+        drawBox(start.x, start.y, width, height);
       },
 
       drawShadow: function(start, end) {
