@@ -166,6 +166,11 @@
 
 
   var tools = {
+    empty: {
+      draw: function() {},
+      drawShadow: function() {}
+    },
+
     line: {
       draw: drawLine,
       drawShadow: drawLineShadow
@@ -185,7 +190,7 @@
 
   function getCurrentTool() {
     var tool = (document.querySelector('input[name="tool"]:checked') || {}).value;
-    return tools[tool] || function () {};
+    return tools[tool] || tools.empty;
   }
 
 
