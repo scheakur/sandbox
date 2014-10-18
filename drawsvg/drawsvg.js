@@ -29,6 +29,21 @@
   }
 
 
+  function draw(props) {
+    svg().appendChild(newElem(props));
+  }
+
+
+  function drawShadow(props) {
+    var shadow = forceGetShadow(props.tag);
+    var attrs = merge(props.attrs, {
+      fill: 'none',
+      stroke: '#999'
+    });
+    updateElem(shadow, attrs);
+  }
+
+
   function lineProps(x1, y1, x2, y2) {
     var path = paths.Path()
       .moveto(x1, y1)
@@ -47,16 +62,12 @@
 
 
   function drawLine(x1, y1, x2, y2) {
-    svg().appendChild(newElem(lineProps(x1, y1, x2, y2)));
+    draw(lineProps(x1, y1, x2, y2));
   }
 
 
   function drawLineShadow(x1, y1, x2, y2) {
-    var shadow = forceGetShadow('path');
-    var attrs = merge(lineProps(x1, y1, x2, y2).attrs, {
-      stroke: '#999'
-    });
-    updateElem(shadow, attrs);
+    drawShadow(lineProps(x1, y1, x2, y2));
   }
 
 
@@ -82,17 +93,12 @@
 
 
   function drawBox(x, y, w, h) {
-    svg().appendChild(newElem(boxProps(x, y, w, h)));
+    draw(boxProps(x, y, w, h));
   }
 
 
   function drawBoxShadow(x, y, w, h) {
-    var shadow = forceGetShadow('path');
-    var attrs = merge(boxProps(x, y, w, h).attrs, {
-      fill: 'none',
-      stroke: '#999'
-    });
-    updateElem(shadow, attrs);
+    drawShadow(boxProps(x, y, w, h));
   }
 
 
@@ -113,18 +119,12 @@
 
 
   function drawCircle(x, y, r) {
-    svg().appendChild(newElem(circleProps(x, y, r)));
+    draw(circleProps(x, y, r));
   }
 
 
   function drawCircleShadow(x, y, r) {
-    var props = circleProps(x, y, r);
-    var shadow = forceGetShadow(props.tag);
-    var attrs = merge(props.attrs, {
-      fill: 'none',
-      stroke: '#999'
-    });
-    updateElem(shadow, attrs);
+    drawShadow(circleProps(x, y, r));
   }
 
 
@@ -134,7 +134,6 @@
       y: normalize(event.pageY - basePos.y)
     };
   }
-
 
 
   function normalize(x) {
