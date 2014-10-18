@@ -61,13 +61,13 @@
   }
 
 
-  function drawLine(x1, y1, x2, y2) {
-    draw(lineProps(x1, y1, x2, y2));
+  function drawLine(start, end) {
+    draw(lineProps(start.x, start.y, end.x, end.y));
   }
 
 
-  function drawLineShadow(x1, y1, x2, y2) {
-    drawShadow(lineProps(x1, y1, x2, y2));
+  function drawLineShadow(start, end) {
+    drawShadow(lineProps(start.x, start.y, end.x, end.y));
   }
 
 
@@ -92,13 +92,20 @@
   }
 
 
-  function drawBox(x, y, w, h) {
-    draw(boxProps(x, y, w, h));
+  function drawBox(start, end) {
+    var width = (end.x - start.x) || gridSize;
+    var height = (end.y - start.y) || gridSize;
+    if (Math.abs(width) <= gridSize && Math.abs(height) <= gridSize) {
+      width = height = gridSize * 10;
+    }
+    draw(boxProps(start.x, start.y, width, height));
   }
 
 
-  function drawBoxShadow(x, y, w, h) {
-    drawShadow(boxProps(x, y, w, h));
+  function drawBoxShadow(start, end) {
+    var width = end.x - start.x;
+    var height = end.y - start.y;
+    drawShadow(boxProps(start.x, start.y, width, height));
   }
 
 
@@ -118,13 +125,16 @@
   }
 
 
-  function drawCircle(x, y, r) {
-    draw(circleProps(x, y, r));
+  function drawCircle(start, end) {
+    var r = distance(start, end);
+    r = (r <= gridSize) ? (gridSize * 5) : r;
+    draw(circleProps(start.x, start.y, r));
   }
 
 
-  function drawCircleShadow(x, y, r) {
-    drawShadow(circleProps(x, y, r));
+  function drawCircleShadow(start, end) {
+    var r = distance(start, end);
+    drawShadow(circleProps(start.x, start.y, r));
   }
 
 
@@ -151,49 +161,18 @@
 
   var tools = {
     line: {
-
-      draw: function(start, end) {
-        drawLine(start.x, start.y, end.x, end.y);
-      },
-
-      drawShadow: function(start, end) {
-        drawLineShadow(start.x, start.y, end.x, end.y);
-      }
-
+      draw: drawLine,
+      drawShadow: drawLineShadow
     },
 
     box: {
-
-      draw: function(start, end) {
-        var width = (end.x - start.x) || gridSize;
-        var height = (end.y - start.y) || gridSize;
-        if (Math.abs(width) <= gridSize && Math.abs(height) <= gridSize) {
-          width = height = gridSize * 10;
-        }
-        drawBox(start.x, start.y, width, height);
-      },
-
-      drawShadow: function(start, end) {
-        var width = end.x - start.x;
-        var height = end.y - start.y;
-        drawBoxShadow(start.x, start.y, width, height);
-      }
-
+      draw: drawBox,
+      drawShadow: drawBoxShadow
     },
 
     circle: {
-
-      draw: function(start, end) {
-        var r = distance(start, end);
-        r = (r <= gridSize) ? (gridSize * 5) : r;
-        drawCircle(start.x, start.y, r);
-      },
-
-      drawShadow: function(start, end) {
-        var r = distance(start, end);
-        drawCircleShadow(start.x, start.y, r);
-      }
-
+      draw: drawCircle,
+      drawShadow: drawCircleShadow
     }
   };
 
