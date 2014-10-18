@@ -62,7 +62,13 @@
 
 
   function drawLine(start, end) {
-    draw(lineProps(start.x, start.y, end.x, end.y));
+    var ex = end.x;
+    var ey = end.y;
+    if (distance(start, end) < gridSize) {
+      ex = start.x + gridSize * 10;
+      ey = end.y + gridSize * 10;
+    }
+    draw(lineProps(start.x, start.y, ex, ey));
   }
 
 
