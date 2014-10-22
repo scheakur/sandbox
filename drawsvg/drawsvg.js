@@ -266,19 +266,20 @@
       var n = 0;
       var timeout = null;
       var s = seq++;
+
+      function run() {
+        n = 0;
+        timeout = null;
+        fn.apply(null, args[s]);
+      }
+
       return function() {
         args[s] = arguments;
         if (!timeout) {
-          timeout = setTimeout(function() {
-            n = 0;
-            timeout = null;
-            fn.apply(null, args[s]);
-          }, maxDelay);
+          timeout = setTimeout(run, maxDelay);
         }
         if (n++ > times) {
-          n = 0;
-          timeout = null;
-          fn.apply(null, args[s]);
+          run();
         }
       };
     };
