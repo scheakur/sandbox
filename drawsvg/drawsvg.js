@@ -229,16 +229,17 @@
 
 
   function main() {
-    var canvas = document.querySelector('.canvas').getBoundingClientRect();
+    var canvas = document.querySelector('.canvas');
+    var canvasBox = canvas.getBoundingClientRect();
 
     var basePos = {
-      x: canvas.x,
-      y: canvas.y
+      x: canvasBox.x,
+      y: canvasBox.y
     };
 
     var start = null;
 
-    document.addEventListener('mousedown', function(event) {
+    canvas.addEventListener('mousedown', function(event) {
       start = pos(event, basePos);
     }, false);
 
@@ -250,9 +251,12 @@
       getCurrentTool().drawShadow(start, end);
     }, 10, 100), false);
 
-    document.addEventListener('mouseup', function(event) {
+    canvas.addEventListener('mouseup', function(event) {
       var end = pos(event, basePos);
       getCurrentTool().draw(start, end);
+    }, false);
+
+    document.addEventListener('mouseup', function(event) {
       start = null;
       removeShadow();
     }, false);
