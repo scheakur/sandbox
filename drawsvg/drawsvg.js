@@ -167,23 +167,23 @@
 
   var tools = {
     empty: {
-      draw: function() {},
-      drawShadow: function() {}
+      mouseup: function() {},
+      mousemove: function() {}
     },
 
     line: {
-      draw: drawLine,
-      drawShadow: drawLineShadow
+      mouseup: drawLine,
+      mousemove: drawLineShadow
     },
 
     box: {
-      draw: drawBox,
-      drawShadow: drawBoxShadow
+      mouseup: drawBox,
+      mousemove: drawBoxShadow
     },
 
     circle: {
-      draw: drawCircle,
-      drawShadow: drawCircleShadow
+      mouseup: drawCircle,
+      mousemove: drawCircleShadow
     }
   };
 
@@ -248,12 +248,12 @@
         return;
       }
       var end = pos(event, basePos);
-      getCurrentTool().drawShadow(start, end);
+      getCurrentTool().mousemove(start, end);
     }, 10, 100), false);
 
     canvas.addEventListener('mouseup', function(event) {
       var end = pos(event, basePos);
-      getCurrentTool().draw(start, end);
+      getCurrentTool().mouseup(start, end);
     }, false);
 
     document.addEventListener('mouseup', function(event) {
