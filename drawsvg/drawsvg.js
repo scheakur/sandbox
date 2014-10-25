@@ -272,15 +272,17 @@
       var s = seq++;
 
       function run() {
-        n = 0;
-        timeout = null;
-        fn.apply(null, args[s]);
+        window.requestAnimationFrame(function() {
+          n = 0;
+          timeout = null;
+          fn.apply(null, args[s]);
+        });
       }
 
       return function() {
         args[s] = arguments;
         if (!timeout) {
-          timeout = setTimeout(run, maxDelay);
+          timeout = window.setTimeout(run, maxDelay);
         }
         if (n++ > times) {
           run();
