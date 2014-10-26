@@ -7,7 +7,11 @@
 
   function merge(a, b) {
     for (var p in b) {
-      a[p] = b[p];
+      if (Array.isArray(a[p]) && Array.isArray(b[p])) {
+        a[p] = a[p].concat(b[p]);
+      } else {
+        a[p] = b[p];
+      }
     }
     return a;
   }
@@ -24,7 +28,11 @@
 
   function updateElem(elem, attrs) {
     for (var key in attrs) {
-      elem.setAttribute(key, attrs[key]);
+      if (Array.isArray(attrs[key])) {
+        elem.setAttribute(key, attrs[key].join(' '));
+      } else {
+        elem.setAttribute(key, attrs[key]);
+      }
     }
   }
 
@@ -37,8 +45,7 @@
   function drawShadow(props) {
     var shadow = forceGetShadow(props.tag);
     var attrs = merge(props.attrs, {
-      fill: 'none',
-      stroke: '#999'
+      class: ['shadow']
     });
     updateElem(shadow, attrs);
   }
@@ -53,9 +60,7 @@
       tag: 'path',
       attrs: {
         d: path.print(),
-        stroke: 'black',
-        'stroke-width': 5,
-        'stroke-linecap': 'round'
+        class: ['line']
       }
     };
   }
@@ -89,10 +94,7 @@
       tag: 'path',
       attrs: {
         d: path.print(),
-        fill: 'white',
-        stroke: 'black',
-        'stroke-width': 5,
-        'stroke-linejoin': 'round'
+        class: ['box']
       }
     };
   }
@@ -122,10 +124,7 @@
         cx: x,
         cy: y,
         r: r,
-        fill: 'white',
-        stroke: 'black',
-        'stroke-width': 5,
-        'stroke-linejoin': 'round'
+        class: ['circle']
       }
     };
   }

@@ -19,3 +19,27 @@
 .tool {
 	margin: 0.2rem;
 }
+
+.line {
+	stroke: black;
+	stroke-width: 5;
+	stroke-linecap: round;
+}
+
+.box {
+	fill: white;
+	stroke: black;
+	stroke-width: 5;
+	stroke-linejoin: round;
+}
+
+.circle {
+	fill: white;
+	stroke: black;
+	stroke-width: 5;
+}
+
+.shadow {
+	fill: none !important;
+	stroke: #999;
+}
