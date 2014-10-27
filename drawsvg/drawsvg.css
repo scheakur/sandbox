@@ -43,3 +43,8 @@
 	fill: none !important;
 	stroke: #999;
 }
+
+.selected {
+	stroke: #f00 !important;
+}
+

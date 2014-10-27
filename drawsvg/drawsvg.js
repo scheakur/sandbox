@@ -45,7 +45,7 @@
   function drawShadow(props) {
     var shadow = forceGetShadow(props.tag);
     var attrs = merge(props.attrs, {
-      class: ['shadow']
+      class: ['svg', 'shadow']
     });
     updateElem(shadow, attrs);
   }
@@ -60,7 +60,7 @@
       tag: 'path',
       attrs: {
         d: path.print(),
-        class: ['line']
+        class: ['svg', 'line']
       }
     };
   }
@@ -94,7 +94,7 @@
       tag: 'path',
       attrs: {
         d: path.print(),
-        class: ['box']
+        class: ['svg', 'box']
       }
     };
   }
@@ -124,7 +124,7 @@
         cx: x,
         cy: y,
         r: r,
-        class: ['circle']
+        class: ['svg', 'circle']
       }
     };
   }
@@ -140,6 +140,25 @@
   function drawCircleShadow(start, end) {
     var r = distance(start, end);
     drawShadow(circleProps(start.x, start.y, r));
+  }
+
+
+  var selected = null;
+
+  function select(start, end, event) {
+    if (!event || !hasClass(event.target, 'svg')) {
+      return;
+    }
+    if (selected) {
+      selected.classList.remove('selected');
+    }
+    selected = event.target;
+    selected.classList.add('selected');
+  }
+
+
+  function hasClass(el, className) {
+    return el && el.classList && el.classList.contains(className);
   }
 
 
@@ -170,6 +189,11 @@
       mousemove: function() {}
     },
 
+    select: {
+      mouseup: select,
+      mousemove: function() {} //TODO implement
+    },
+
     line: {
       mouseup: drawLine,
       mousemove: drawLineShadow
@@ -197,7 +221,7 @@
     var s = newElem({
       tag: tag,
       attrs: {
-        class: 'shadow'
+        class: ['svg', 'shadow']
       }
     });
     svg().appendChild(s);
@@ -252,7 +276,7 @@
 
     canvas.addEventListener('mouseup', function(event) {
       var end = pos(event, basePos);
-      getCurrentTool().mouseup(start, end);
+      getCurrentTool().mouseup(start, end, event);
     }, false);
 
     document.addEventListener('mouseup', function(event) {
