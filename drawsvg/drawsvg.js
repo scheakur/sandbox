@@ -157,6 +157,32 @@
   }
 
 
+  function handleSelected(keyCode) {
+    if (!selected) {
+      return;
+    }
+
+    switch (keyCode) {
+      case 8:
+      case 46:
+        removeSelected();
+        break;
+      default:
+        break;
+    }
+  }
+
+
+  function removeSelected() {
+    if (!selected) {
+      return;
+    }
+
+    selected.parentNode.removeChild(selected);
+    selected = null;
+  }
+
+
   function hasClass(el, className) {
     return el && el.classList && el.classList.contains(className);
   }
@@ -190,6 +216,7 @@
     },
 
     select: {
+      keyup: handleSelected,
       mouseup: select,
       mousemove: function() {} //TODO implement
     },
@@ -283,6 +310,15 @@
       start = null;
       removeShadow();
     }, false);
+
+    document.addEventListener('keyup', function(event) {
+      var keyCode = event.keyCode;
+      (getCurrentTool().keyup || doNothing)(keyCode);
+    }, false);
+  }
+
+
+  function doNothing() {
   }
 
 
