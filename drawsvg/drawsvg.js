@@ -210,15 +210,11 @@
 
 
   var tools = {
-    empty: {
-      mouseup: function() {},
-      mousemove: function() {}
-    },
+    empty: {},
 
     select: {
       keyup: handleSelected,
       mouseup: select,
-      mousemove: function() {} //TODO implement
     },
 
     line: {
@@ -298,12 +294,12 @@
         return;
       }
       var end = pos(event, basePos);
-      getCurrentTool().mousemove(start, end);
+      findHandler('mousemove')(start, end);
     }, 10, 100), false);
 
     canvas.addEventListener('mouseup', function(event) {
       var end = pos(event, basePos);
-      getCurrentTool().mouseup(start, end, event);
+      findHandler('mouseup')(start, end, event);
     }, false);
 
     document.addEventListener('mouseup', function(event) {
@@ -313,12 +309,17 @@
 
     document.addEventListener('keyup', function(event) {
       var keyCode = event.keyCode;
-      (getCurrentTool().keyup || doNothing)(keyCode);
+      findHandler('keyup')(keyCode);
     }, false);
   }
 
 
   function doNothing() {
+  }
+
+
+  function findHandler(key) {
+    return getCurrentTool()[key] || doNothing;
   }
 
 
