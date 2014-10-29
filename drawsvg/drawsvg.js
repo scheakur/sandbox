@@ -45,7 +45,7 @@
   function drawShadow(props) {
     var shadow = forceGetShadow(props.tag);
     var attrs = merge(props.attrs, {
-      class: ['svg', 'shadow']
+      class: shadow.className.baseVal.split(' ')
     });
     updateElem(shadow, attrs);
   }
