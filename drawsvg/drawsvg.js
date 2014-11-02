@@ -163,8 +163,8 @@
     }
 
     switch (keyCode) {
-      case 8:
-      case 46:
+      case 8:  // Backspace
+      case 46: // Delete
         removeSelected();
         break;
       default:
