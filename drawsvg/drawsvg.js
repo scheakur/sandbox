@@ -311,6 +311,10 @@
       var keyCode = event.keyCode;
       findHandler('keyup')(keyCode);
     }, false);
+
+    document.addEventListener('dragstart', function(event) {
+      event.preventDefault();
+    });
   }
 
 
