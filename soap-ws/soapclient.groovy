@@ -33,7 +33,7 @@ println separator
 String request = builder.buildInputMessage(operation)
 
 println request.dump()
-println ''
+println separator
 
 SoapClient client = SoapClient.builder()
 	.endpointUri('http://wsf.cdyne.com/WeatherWS/Weather.asmx')
