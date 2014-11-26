@@ -45,7 +45,7 @@ public class MetaspaceSizer {
 				}
 			} catch (Throwable e) {
 				printMetaspaceSize();
-				System.out.println("Num of classes = " + i);
+				System.out.println("Number of defined classes = " + i);
 				throw e;
 			}
 		}
