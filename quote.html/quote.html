@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>QUOTE</title>
+    <style>
+q:lang(ja) {
+  quotes: "「" "」" "『" "』";
+}
+
+span.quote:lang(ja) {
+  quotes: "「" "」" "『" "』";
+}
+span.quote:before {
+  content: open-quote;
+}
+span.quote:after {
+  content: close-quote;
+}
+
+pre {
+  margin-left: 4rem;
+}
+
+.sample {
+  margin-left: 2rem;
+}
+
+.sample:before {
+  content: "サンプル";
+}
+    </style>
+  </head>
+  <body>
+    <div>
+      以下のように指定すると言語ごとの引用符を設定できる。
+      <code><pre>
+q:lang(ja) {
+  quotes: "「" "」" "『" "』";
+}
+      </pre></code>
+      <div class="sample">
+        <p><q lang="ja">ja引用文(q)です<q lang="ja">jaネストした引用文(q)です</q></q></p>
+        <p><q lang="en">en引用文(q)です<q lang="ja">jaネストした引用文(q)です</q></q></p>
+      </div>
+    </div>
+    <div>
+      これは他のタグにも設定でき、spanタグに指定したい場合は次のようにする。
+      <code><pre>
+span.quote:lang(ja) {
+  quotes: "「" "」" "『" "』";
+}
+span.quote:before {
+  content: open-quote;
+}
+span.quote:after {
+  content: close-quote;
+}
+      </pre></code>
+      <div class="sample">
+        <p><span class="quote" lang="ja">ja引用文(span)です<q lang="ja">jaネストした引用文(q)です</q></span></p>
+      </div>
+    </div>
+  </body>
+</html>
