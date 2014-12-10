@@ -59,8 +59,8 @@ var bf = (function() {
   }
 
 
-  function ch() {
-    return String.fromCharCode([memory[pointer]]);
+  function ch(charCode) {
+    return String.fromCharCode(charCode);
   }
 
 
