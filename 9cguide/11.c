@@ -18,6 +18,7 @@ int main(void)
 	return 0;
 }
 
-bool isOlympicHeld(int year) {
+bool isOlympicHeld(int year)
+{
 	return year % 2 == 0;
 }
