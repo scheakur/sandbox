@@ -1,0 +1,16 @@
+buildscript {
+	repositories {
+		maven {
+			url uri('../repo')
+		}
+	}
+	dependencies {
+		classpath 'com.scheakur.gradle:sample-plugin:1.0-SNAPSHOT'
+	}
+}
+
+apply plugin: 'com.scheakur.gradle.sample'
+
+task sample3(type: com.scheakur.gradle.SampleTask) {
+	sample = 'Sample Task 3'
+}
