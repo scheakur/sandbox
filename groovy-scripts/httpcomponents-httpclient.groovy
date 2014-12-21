@@ -1,15 +1,15 @@
 @Grab('org.apache.httpcomponents:httpclient:4.3.5')
-import org.apache.http.client.config.CookieSpecs;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.client.LaxRedirectStrategy;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
+import org.apache.http.client.config.CookieSpecs
+import org.apache.http.client.config.RequestConfig
+import org.apache.http.client.entity.UrlEncodedFormEntity
+import org.apache.http.client.methods.HttpPost
+import org.apache.http.impl.client.HttpClients
+import org.apache.http.impl.client.LaxRedirectStrategy
+import org.apache.http.message.BasicNameValuePair
+import org.apache.http.util.EntityUtils
 
 def config = RequestConfig.custom().setCookieSpec(CookieSpecs.BROWSER_COMPATIBILITY).build()
-def redirectStrategy = new LaxRedirectStrategy();
+def redirectStrategy = new LaxRedirectStrategy()
 def httpClient = HttpClients.custom()
 	.setRedirectStrategy(redirectStrategy)
 	.setDefaultRequestConfig(config).build()
