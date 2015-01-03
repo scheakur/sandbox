@@ -6,7 +6,8 @@ import (
 	"log"
 	"os"
 
-	"code.google.com/p/mahonia"
+	"golang.org/x/text/encoding/japanese"
+	"golang.org/x/text/transform"
 )
 
 func main() {
@@ -23,7 +24,7 @@ func main() {
 		defer fp.Close()
 	}
 
-	scanner := bufio.NewScanner(mahonia.NewDecoder("Shift_JIS").NewReader(fp))
+	scanner := bufio.NewScanner(transform.NewReader(fp, japanese.ShiftJIS.NewDecoder()))
 	for scanner.Scan() {
 		fmt.Println(scanner.Text())
 	}
