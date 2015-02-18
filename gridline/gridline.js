@@ -32,25 +32,24 @@
     for (var i = 1; i <= subLines / 2; i++) {
       [1, -1].forEach(function(sign) {
         var diff = sign * i * subSize;
-        ctx.beginPath();
-        ctx.moveTo(0, half + diff);
-        ctx.lineTo(size, half + diff);
-        ctx.moveTo(half + diff, 0);
-        ctx.lineTo(half + diff, size);
-        ctx.strokeStyle = '#eee';
-        ctx.stroke();
+        drawLine(ctx, half + diff, half + diff, size, '#eee');
       });
     }
 
-    ctx.beginPath();
-    ctx.moveTo(0, half);
-    ctx.lineTo(size, half);
-    ctx.moveTo(half, 0);
-    ctx.lineTo(half, size);
-    ctx.strokeStyle = '#76d3e6';
-    ctx.stroke();
+    drawLine(ctx, half, half, size, '#76d3e6');
 
     return canvas.toDataURL();
+  }
+
+
+  function drawLine(ctx, x, y, size, color) {
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(size, y);
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, size);
+    ctx.strokeStyle = color;
+    ctx.stroke();
   }
 
   window.addEventListener('DOMContentLoaded', main, false);
