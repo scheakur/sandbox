@@ -42,14 +42,14 @@
   }
 
 
-  function drawLine(ctx, x, y, size, color) {
-    ctx.beginPath();
-    ctx.moveTo(0, y);
-    ctx.lineTo(size, y);
-    ctx.moveTo(x, 0);
-    ctx.lineTo(x, size);
-    ctx.strokeStyle = color;
-    ctx.stroke();
+  function drawLine(context, cx, cy, size, color) {
+    context.beginPath();
+    context.moveTo(0, cy);
+    context.lineTo(size, cy);
+    context.moveTo(cx, 0);
+    context.lineTo(cx, size);
+    context.strokeStyle = color;
+    context.stroke();
   }
 
   window.addEventListener('DOMContentLoaded', main, false);
