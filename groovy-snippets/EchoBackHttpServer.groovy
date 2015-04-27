@@ -9,9 +9,6 @@ def server = HttpServer.create(new InetSocketAddress(PORT), 0)
 
 server.createContext('/', new HttpHandler() {
 	void handle(HttpExchange exchange) {
-		parseGetParameters(exchange)
-		parsePostParameters(exchange)
-		// def buf = getContents(exchange.getRequestURI().getPath())
 		def buf = extractRequest(exchange).getBytes()
 		exchange.getResponseHeaders().add('Content-Type', 'application/json')
 		exchange.sendResponseHeaders(200, buf.length)
@@ -23,25 +20,33 @@ server.createContext('/', new HttpHandler() {
 server.start()
 
 
-void parseGetParameters(HttpExchange exchange) {
-	def parameters = new HashMap<String, Object>()
+Map<String, Object> extractParams(HttpExchange exchange) {
+	def params = extractGetParams(exchange)
+	params.putAll(extractPostParams(exchange))
+	return params
+}
+
+Map<String, Object> extractGetParams(HttpExchange exchange) {
+	def params = new HashMap<String, Object>()
 	def requestedUri = exchange.requestURI
 	def query = requestedUri.rawQuery
-	parseQuery(query, parameters)
-	exchange.setAttribute('parameters', parameters)
+	parseQuery(query, params)
+	return params
 }
 
-void parsePostParameters(HttpExchange exchange) {
-	if ('post'.equalsIgnoreCase(exchange.requestMethod)) {
-		def parameters = exchange.getAttribute('parameters')
-		def isr = new InputStreamReader(exchange.requestBody,'utf-8')
-		def br = new BufferedReader(isr)
-		def query = br.readLine()
-		parseQuery(query, parameters)
+Map<String, Object> extractPostParams(HttpExchange exchange) {
+	if (!'post'.equalsIgnoreCase(exchange.requestMethod)) {
+		return [:]
 	}
+	def params = new HashMap<String, Object>()
+	exchange.requestBody.withReader('UTF-8') {
+		def query = it.readLine()
+		parseQuery(query, params)
+	}
+	return params
 }
 
-void parseQuery(String query, Map<String, Object> parameters) {
+void parseQuery(String query, Map<String, Object> params) {
 	if (query != null) {
 		def pairs = query.split('[&]')
 
@@ -57,16 +62,16 @@ void parseQuery(String query, Map<String, Object> parameters) {
 				value = URLDecoder.decode(param[1], System.getProperty('file.encoding'))
 			}
 
-			if (parameters.containsKey(key)) {
-				def obj = parameters.get(key)
-				if(obj instanceof List) {
+			if (params.containsKey(key)) {
+				def obj = params.get(key)
+				if (obj instanceof List) {
 					obj.add(value)
-				} else if(obj instanceof String) {
+				} else if (obj instanceof String) {
 					def values = [obj, value]
-					parameters.put(key, values)
+					params.put(key, values)
 				}
 			} else {
-				parameters.put(key, value)
+				params.put(key, value)
 			}
 		}
 	}
@@ -75,7 +80,7 @@ void parseQuery(String query, Map<String, Object> parameters) {
 String extractRequest(HttpExchange exchange) {
 	def method = exchange.requestMethod
 	def path = exchange.requestURI.path.toString()
-	def params = exchange.getAttribute('parameters')
+	def params = extractParams(exchange)
 
 	def json = new JsonBuilder()
 

@@ -53,7 +53,10 @@ println(httpGet('http://localhost:18081/foo?bar=baz', { response ->
 	return '?'
 }))
 
-println(httpPost('http://localhost:18081/hoge', [ fuga: 'piyo' ], { response ->
+println(httpPost('http://localhost:18081/hoge?fuga=piyo', [
+	vim: 'emacs',
+	java: '+you',
+], { response ->
 	if (response.getStatusLine().getStatusCode() == 200) {
 		def entity = response.getEntity()
 		return EntityUtils.toString(entity, 'UTF-8')
