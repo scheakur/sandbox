@@ -7,18 +7,18 @@
     sizer.addEventListener('change', function(e) {
       resetGrid(Number(e.target.value), min, max);
     });
-    resetGrid(Number(sizer.value), min, max);
+    resetGrid(Number(sizer.value), min, max, document.body);
   }
 
-  function resetGrid(size, min, max) {
+  function resetGrid(size, min, max, container) {
     if (isNaN(size) || size < min || size > max) {
       return;
     }
 
     var image = createCrossImage(size, 10);
 
-    document.body.style.backgroundRepeat = 'repeat';
-    document.body.style.backgroundImage = 'url(' + image + ')';
+    container.style.backgroundRepeat = 'repeat';
+    container.style.backgroundImage = 'url(' + image + ')';
   }
 
   function createCrossImage(size, subLines) {

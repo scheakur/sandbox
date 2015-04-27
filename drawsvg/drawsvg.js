@@ -338,6 +338,7 @@
       function run() {
         window.requestAnimationFrame(function() {
           n = 0;
+          window.clearTimeout(timeout);
           timeout = null;
           fn.apply(null, args[s]);
         });
