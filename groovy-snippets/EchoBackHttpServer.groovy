@@ -9,10 +9,10 @@ def server = HttpServer.create(new InetSocketAddress(PORT), 0)
 
 server.createContext('/', new HttpHandler() {
 	void handle(HttpExchange exchange) {
-		def buf = extractRequest(exchange).getBytes()
-		exchange.getResponseHeaders().add('Content-Type', 'application/json')
+		def buf = extractRequest(exchange).bytes
+		exchange.responseHeaders.add('Content-Type', 'application/json')
 		exchange.sendResponseHeaders(200, buf.length)
-		exchange.getResponseBody().write(buf)
+		exchange.responseBody.write(buf)
 		exchange.close()
 	}
 })
@@ -26,6 +26,7 @@ Map<String, Object> extractParams(HttpExchange exchange) {
 	return params
 }
 
+
 Map<String, Object> extractGetParams(HttpExchange exchange) {
 	def params = new HashMap<String, Object>()
 	def requestedUri = exchange.requestURI
@@ -33,6 +34,7 @@ Map<String, Object> extractGetParams(HttpExchange exchange) {
 	parseQuery(query, params)
 	return params
 }
+
 
 Map<String, Object> extractPostParams(HttpExchange exchange) {
 	if (!'post'.equalsIgnoreCase(exchange.requestMethod)) {
@@ -46,36 +48,32 @@ Map<String, Object> extractPostParams(HttpExchange exchange) {
 	return params
 }
 
+
 void parseQuery(String query, Map<String, Object> params) {
-	if (query != null) {
-		def pairs = query.split('[&]')
+	if (query == null) {
+		return
+	}
+	query.split('&').each { param ->
+		def kv = param.split('=')
 
-		for (def pair : pairs) {
-			def param = pair.split('[=]')
+		def enc = System.getProperty('file.encoding')
+		def key = (kv.length > 0) ? URLDecoder.decode(kv[0], enc) : ''
+		def value = (kv.length > 1) ? URLDecoder.decode(kv[1], enc) : ''
 
-			def key = null
-			def value = null
-			if (param.length > 0) {
-				key = URLDecoder.decode(param[0], System.getProperty('file.encoding'))
+		if (params.containsKey(key)) {
+			def obj = params.get(key)
+			if (obj instanceof List) {
+				obj.add(value)
+			} else if (obj instanceof String) {
+				def values = [value, obj]
+				params.put(key, values)
 			}
-			if (param.length > 1) {
-				value = URLDecoder.decode(param[1], System.getProperty('file.encoding'))
-			}
-
-			if (params.containsKey(key)) {
-				def obj = params.get(key)
-				if (obj instanceof List) {
-					obj.add(value)
-				} else if (obj instanceof String) {
-					def values = [obj, value]
-					params.put(key, values)
-				}
-			} else {
-				params.put(key, value)
-			}
+		} else {
+			params.put(key, value)
 		}
 	}
 }
+
 
 String extractRequest(HttpExchange exchange) {
 	def method = exchange.requestMethod
