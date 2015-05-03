@@ -19,6 +19,8 @@ server.createContext('/', new HttpHandler() {
 
 server.start()
 
+println(server.address)
+
 
 Map<String, Object> extractParams(HttpExchange exchange) {
 	def params = extractGetParams(exchange)
@@ -76,16 +78,12 @@ void parseQuery(String query, Map<String, Object> params) {
 
 
 String extractRequest(HttpExchange exchange) {
-	def method = exchange.requestMethod
-	def path = exchange.requestURI.path.toString()
-	def params = extractParams(exchange)
-
 	def json = new JsonBuilder()
 
 	json (
-		method: method,
-		path: path,
-		params: params,
+		method: exchange.requestMethod,
+		path: exchange.requestURI.path.toString(),
+		params: extractParams(exchange),
 	)
 
 	return json.toString()
