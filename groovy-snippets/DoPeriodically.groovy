@@ -24,4 +24,9 @@ def doPeriodically(fn, initDelay, period) {
 doPeriodically({ i, executor ->
 	println('foo' + i)
 	return i < 10
-}, 0, 1)
+}, 0, 2)
+
+doPeriodically({ i, executor ->
+	println('bar' + i)
+	return i < 10
+}, 5, 1)
