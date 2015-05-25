@@ -1,0 +1,13 @@
+{
+  "title": "Hello",
+  "name": "fx-addon-hello",
+  "version": "0.0.1",
+  "description": "Hello, Firefox Addon",
+  "main": "index.js",
+  "author": "scheakur",
+  "engines": {
+    "firefox": ">=38.0a1",
+    "fennec": ">=38.0a1"
+  },
+  "license": "MIT"
+}
