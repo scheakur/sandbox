@@ -8,7 +8,7 @@ import org.apache.http.impl.auth.BasicScheme
 import org.apache.http.impl.client.BasicAuthCache
 import org.apache.http.impl.client.BasicCredentialsProvider
 import org.apache.http.impl.client.HttpClients
-import org.apache.http.util.EntityUtils;
+import org.apache.http.util.EntityUtils
 import org.apache.http.entity.StringEntity
 
 def url = 'http://localhost:8080/foo'
@@ -38,5 +38,5 @@ context.authCache = authCache
 
 def response = httpClient.execute(host, httpPost, context)
 
-println response.statusLine.statusCode;
-println EntityUtils.toString(response.getEntity());
+println response.statusLine.statusCode
+println EntityUtils.toString(response.entity)
