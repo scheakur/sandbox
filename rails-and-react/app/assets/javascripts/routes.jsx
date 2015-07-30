@@ -1,11 +1,8 @@
-var React = require('react');
-var Router = require('react-router');
-var DefaultRoute = Router.DefaultRoute;
-var Route = Router.Route;
-var RouteHandler = Router.RouteHandler;
+import React from 'react';
+import {DefaultRoute, Route, RouteHandler} from 'react-router';
 
-var App = React.createClass({
-  render: function() {
+class App extends React.Component {
+  render() {
     return (
         <div>
           <header>header</header>
@@ -14,21 +11,24 @@ var App = React.createClass({
         </div>
     );
   }
-});
+}
 
-var Foo = React.createClass({
-  render: function() {
+
+class Foo extends React.Component {
+  render() {
     return <div>foo</div>;
   }
-});
+}
 
-var Bar = React.createClass({
-  render: function() {
+
+class Bar extends React.Component {
+  render() {
     return <div>bar</div>;
   }
-});
+}
 
-var Routes = (
+
+let Routes = (
   <Route name="app" path="/" handler={App}>
     <DefaultRoute handler={Foo}/>
     <Route name="foo" path="/foo" handler={Foo} />
@@ -36,4 +36,5 @@ var Routes = (
   </Route>
 );
 
-module.exports = Routes;
+
+export default Routes;

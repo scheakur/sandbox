@@ -1,16 +1,11 @@
-(function() {
-  var React = require('react');
-  window.React = React;
+import React from 'react';
+import Router from 'react-router';
+import Routes from './routes.jsx';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
-  var injectTapEventPlugin  = require('react-tap-event-plugin');
-  injectTapEventPlugin();
-
-  var Router = require('react-router');
-  var Routes = require('./routes.jsx');
-
-  $(function() {
-    Router.run(Routes, function(Handler) {
-      React.render(<Handler/>, document.body);
-    });
+window.addEventListener('DOMContentLoaded', () => {
+  Router.run(Routes, (Handler) => {
+    React.render(<Handler/>, document.body);
   });
-})();
+});
