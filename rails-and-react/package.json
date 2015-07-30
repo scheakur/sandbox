@@ -7,15 +7,15 @@
     "test": "test"
   },
   "scripts": {
-    "bundle": "browserify -t reactify app/assets/javascripts/app.jsx > app/assets/javascripts/bundle.js",
-    "watch-js": "watchify -t reactify app/assets/javascripts/app.jsx -o app/assets/javascripts/bundle.js -v",
+    "bundle": "browserify -t babelify app/assets/javascripts/app.jsx > app/assets/javascripts/bundle.js",
+    "watch-js": "watchify -t babelify app/assets/javascripts/app.jsx -o app/assets/javascripts/bundle.js -v",
     "start": "npm run watch-js & rails s"
   },
   "author": "scheakur <scheakur@gmail.com> (http://scheakur.com/)",
   "license": "MIT",
   "devDependencies": {
+    "babelify": "^6.1.3",
     "browserify": "^11.0.0",
-    "reactify": "^1.1.1",
     "watchify": "^3.3.0"
   },
   "dependencies": {
