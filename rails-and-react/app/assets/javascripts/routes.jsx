@@ -1,40 +1,13 @@
 import React from 'react';
-import {DefaultRoute, Route, RouteHandler} from 'react-router';
+import {DefaultRoute, Route} from 'react-router';
+import Root from './components/root.jsx';
+import Foo from './components/foo.jsx';
+import Bar from './components/bar.jsx';
 
-class App extends React.Component {
-  render() {
-    return (
-        <div>
-          <header>header</header>
-          <section><RouteHandler/></section>
-          <footer>footer</footer>
-        </div>
-    );
-  }
-}
-
-
-class Foo extends React.Component {
-  render() {
-    return <div>foo</div>;
-  }
-}
-
-
-class Bar extends React.Component {
-  render() {
-    return <div>bar</div>;
-  }
-}
-
-
-let Routes = (
-  <Route name="app" path="/" handler={App}>
+export default (
+  <Route name="app" path="/" handler={Root}>
     <DefaultRoute handler={Foo}/>
     <Route name="foo" path="/foo" handler={Foo} />
     <Route name="bar" path="/bar" handler={Bar} />
   </Route>
 );
-
-
-export default Routes;
