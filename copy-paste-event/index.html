@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>copy paste</title>
+  </head>
+  <body>
+    <div id="container">foo bar baz</div>
+    <script>
+      window.addEventListener('copy', function(event) {
+        console.log('copy');
+        var selectedText = window.getSelection().toString();
+        if (selectedText === '') {
+          event.clipboardData.setData('text/plain', window.location.href);
+          event.preventDefault();
+        }
+      });
+
+      window.addEventListener('paste', function(event) {
+        console.log('paste');
+        var text = event.clipboardData.getData('text/plain');
+        document.getElementById('container').textContent = text;
+      });
+    </script>
+  </body>
+</html>
