@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>copy paste</title>
+  </head>
+  <body>
+    <div>
+      <textarea id="copy-area"></textarea>
+      <input type="button" value="copy" id="copy-button">
+    </div>
+    <div>
+      <textarea id="paste-area"></textarea>
+      <input type="button" value="paste" id="paste-button">
+    </div>
+    <script>
+      document.querySelector('#copy-button').addEventListener('click', function() {
+        document.querySelector('#copy-area').select();
+        console.log('copy?', document.execCommand('copy'));
+      });
+
+      document.querySelector('#paste-button').addEventListener('click', function() {
+        document.querySelector('#paste-area').focus();
+        console.log('paste?', document.execCommand('paste'));
+      });
+    </script>
+  </body>
+</html>
+
