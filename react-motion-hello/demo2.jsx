@@ -6,9 +6,9 @@ export default class Demo2 extends React.Component {
     super();
     this.state = {
       blocks: {
-        a: 'I am a',
-        b: 'I am b',
-        c: 'I am c',
+        a: 'あいうえお',
+        b: 'カキクケコ',
+        c: '日本語',
       },
     };
   }
@@ -27,7 +27,7 @@ export default class Demo2 extends React.Component {
         opacity: {
           val: 1
         },
-        text: blocks[key], // interpolate the above 2 fields only
+        text: blocks[key],
       };
     });
     return configs;
@@ -49,7 +49,6 @@ export default class Demo2 extends React.Component {
   }
 
   willLeave(key, value, endValue, currentValue, currentSpeed) {
-    // the key with this value is truly killed when the values reaches destination
     return {
       height: {
         val: 0
