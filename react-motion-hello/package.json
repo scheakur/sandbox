@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "browserify -t babelify main.js > bundle.js",
+    "watch": "watchify -t babelify main.js -o bundle.js -v",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "scheakur <scheakur@gmail.com> (http://scheakur.com/)",
@@ -15,6 +16,7 @@
   },
   "devDependencies": {
     "babelify": "^6.3.0",
-    "browserify": "^11.2.0"
+    "browserify": "^11.2.0",
+    "watchify": "^3.4.0"
   }
 }
