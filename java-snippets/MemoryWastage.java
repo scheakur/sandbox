@@ -1,5 +1,8 @@
 import java.security.SecureRandom;
 
+// Usage:
+// javac MemoryWastage.java; java -Xmx16m -XX:MaxMetaspaceSize=8m -XX:+UseG1GC -verbose:gc MemoryWastage
+
 public class MemoryWastage {
 
 	public static void main(final String... args) {
