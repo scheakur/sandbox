@@ -16,29 +16,24 @@ public class StringTruncater {
 		System.out.println(truncate("ほげふが", Charset.forName("Windows-31j"), 7));
 	}
 
-	public static String truncate(final String target, final Charset charset, final int byteLength) {
-		if (target == null || target.isEmpty()) {
-			return target;
+	public static String truncate(final String str, final Charset charset, final int len) {
+		if (str == null || str.isEmpty()) {
+			return str;
 		}
 
 		CharsetEncoder encoder = charset.newEncoder();
 
-		if (byteLength >= encoder.maxBytesPerChar() * target.length()) {
-			return target;
+		if (len >= encoder.maxBytesPerChar() * str.length()) {
+			return str;
 		}
 
-		CharBuffer in = CharBuffer.wrap(new char[Math.min(target.length(), byteLength)]);
-		target.getChars(0, Math.min(target.length(), in.length()), in.array(), 0);
+		CharBuffer in = CharBuffer.wrap(new char[Math.min(str.length(), len)]);
+		str.getChars(0, Math.min(str.length(), in.length()), in.array(), 0);
 
-		ByteBuffer out = ByteBuffer.allocate(byteLength);
+		ByteBuffer out = ByteBuffer.allocate(len);
 		encoder.reset();
 
-		CoderResult result;
-		if (in.hasRemaining()) {
-			result = encoder.encode(in, out, true);
-		} else {
-			result = CoderResult.UNDERFLOW;
-		}
+		CoderResult result = (in.hasRemaining()) ? encoder.encode(in, out, true) : CoderResult.UNDERFLOW;
 
 		if (result.isUnderflow()) {
 			encoder.flush(out);
