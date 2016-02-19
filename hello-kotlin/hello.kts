@@ -7,6 +7,5 @@ folders?.forEach { folder -> println(folder) }
 
 val array = Array(5, { i -> "${i} * ${i} = ${(i * i)}" })
 for (elem in array) {
-  println(elem)
+    println(elem)
 }
-
