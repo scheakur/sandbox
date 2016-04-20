@@ -1,0 +1,3 @@
+rootProject.name = 'TextWidth'
+
+include ':app'
