@@ -1,5 +1,3 @@
-import visit from'unist-util-visit';
-
 class Visitors {
 
   constructor(compilers) {
