@@ -56,10 +56,6 @@ class Compilers {
       let value = this.visit(nodes[index], parent);
 
       if (value) {
-        if (prev && prev.type === 'break') {
-          value = trim.left(value);
-        }
-
         values.push(value);
       }
 
