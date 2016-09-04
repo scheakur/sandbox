@@ -1,0 +1,20 @@
+body {
+  background: '#eee';
+}
+
+.links {
+  margin: 2rem;
+}
+
+.link {
+  display: block;
+}
+
+.canvas {
+  margin: 2rem;
+}
+
+.container {
+  padding: 1rem;
+  min-height: 10rem;
+}
