@@ -27,6 +27,10 @@ window.addEventListener('DOMContentLoaded', function() {
     './5-1.css',
     './5-2.css',
     './5-3.css',
+    './5-4.css',
+    './6-1.css',
+    './6-2.css',
+    './6-3.css',
   ];
 
   function generateLinks() {
