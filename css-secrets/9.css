@@ -1,0 +1,39 @@
+body {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.section9 {
+  background: #fb3;
+  width: 400px;
+  height: 200px;
+  margin: 10px;
+}
+
+.css1 {
+  border-radius: 100px;
+}
+
+.css2 {
+  border-radius: 50%;
+}
+
+.css3 {
+  border-radius: 200px / 100px;
+}
+
+.css4 {
+  border-radius: 50px / 100px;
+}
+
+.css5 {
+  border-radius: 50% / 100% 100% 0 0;
+}
+
+.css6 {
+  border-radius: 100% 0 0 100% / 50%;
+}
+
+.css7 {
+  border-radius: 100% 0 0 0;
+}
