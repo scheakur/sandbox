@@ -1,4 +1,4 @@
-body {
+.section {
   display: flex;
   flex-wrap: wrap;
 }
@@ -10,30 +10,30 @@ body {
   margin: 10px;
 }
 
-.css1 {
+.css9-1 {
   border-radius: 100px;
 }
 
-.css2 {
+.css9-2 {
   border-radius: 50%;
 }
 
-.css3 {
+.css9-3 {
   border-radius: 200px / 100px;
 }
 
-.css4 {
+.css9-4 {
   border-radius: 50px / 100px;
 }
 
-.css5 {
+.css9-5 {
   border-radius: 50% / 100% 100% 0 0;
 }
 
-.css6 {
+.css9-6 {
   border-radius: 100% 0 0 100% / 50%;
 }
 
-.css7 {
+.css9-7 {
   border-radius: 100% 0 0 0;
 }
