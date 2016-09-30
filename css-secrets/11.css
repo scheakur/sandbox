@@ -1,0 +1,27 @@
+.section11 {
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+}
+
+.css11-1 {
+  background: #58a;
+  transform: rotate(45deg);
+  overflow: hidden;
+}
+
+.css11-1 > img {
+  max-width: 100%;
+  transform: rotate(-45deg) scale(1.42);
+}
+
+.css11-2 {
+  -webkit-clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  transition: 1s -webkit-clip-path, 1s clip-path;
+}
+
+.css11-2:hover {
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
