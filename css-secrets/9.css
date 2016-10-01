@@ -1,7 +1,7 @@
 .section9 {
   background: #fb3;
-  width: 400px;
-  height: 200px;
+  width: 200px;
+  height: 100px;
   margin: 10px;
 }
 
@@ -14,11 +14,11 @@
 }
 
 .css9-3 {
-  border-radius: 200px / 100px;
+  border-radius: 100px / 50px;
 }
 
 .css9-4 {
-  border-radius: 50px / 100px;
+  border-radius: 40px / 70px;
 }
 
 .css9-5 {
