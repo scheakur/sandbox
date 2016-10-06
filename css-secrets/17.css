@@ -1,0 +1,25 @@
+.section17 {
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+}
+
+.css17-1 {
+  transition: .5s filter;
+  filter: sepia() saturate(3) hue-rotate(180deg);
+}
+
+.css17-1:hover, .css17-1:focus {
+  filter: none;
+}
+
+.css17-2 {
+  background-size: contain;
+  background-color: hsl(335, 100%, 50%);
+  background-blend-mode: luminosity;
+  transition: .5s background-color;
+}
+
+.css17-2:hover {
+  background-color: transparent;
+}
