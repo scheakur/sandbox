@@ -1,0 +1,22 @@
+.section23 pre {
+  padding-left: .5em;
+  padding-right: .5em;
+  line-height: 1.5;
+  background: hsl(20, 50%, 95%);
+  background-image: linear-gradient(rgba(120, 0, 0, .1) 50%, transparent 0);
+  background-size: auto 3em; /* 3em = 2 * line-height */
+  background-origin: content-box;
+  font-family: Consolas, Monaco, monospace;
+}
+
+.section23 pre code {
+  font: inherit;
+}
+
+.css23-1 {
+  tab-size: 4;
+}
+
+.css23-2 {
+  tab-size: 10;
+}
