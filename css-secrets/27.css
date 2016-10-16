@@ -1,0 +1,55 @@
+.section27 {
+  font-size: 2rem;
+  padding: .5em;
+}
+
+.css27-1 {
+  background: hsl(210, 13%, 60%);
+  color: hsl(210, 13%, 30%);
+  text-shadow: 0 1px 1px hsla(0, 0%, 100%, .8);
+}
+
+.css27-2 {
+  background: hsl(210, 13%, 30%);
+  color: hsl(210, 13%, 60%);
+  text-shadow: 0 -1px 1px black;
+}
+
+.css27-3 {
+  background: deeppink;
+  color: white;
+  text-shadow: 1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black;
+}
+
+.css27-4 {
+  background: #203;
+  color: #ffc;
+  text-decoration: none;
+  transition: 1s;
+}
+
+.css27-4:hover {
+  text-shadow: 0 0 .1em, 0 0 .3em;
+}
+
+.css27-5 {
+  background: #58a;
+  color: white;
+  text-shadow:
+    0 1px hsl(0, 0%, 85%),
+    0 2px hsl(0, 0%, 80%),
+    0 3px hsl(0, 0%, 75%),
+    0 4px hsl(0, 0%, 70%),
+    0 5px hsl(0, 0%, 65%),
+    0 5px 10px black;
+}
+
+.css27-6 {
+  color: white;
+  background: hsl(0, 50%, 45%);
+  text-shadow:
+    1px 1px black, 2px 2px black,
+    3px 3px black, 4px 4px black,
+    5px 5px black, 6px 6px black,
+    7px 7px black, 8px 8px black;
+}
