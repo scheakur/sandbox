@@ -1,4 +1,4 @@
-.section22 pre {
+.css22 pre {
   padding-left: .5em;
   padding-right: .5em;
   line-height: 1.5;
@@ -9,6 +9,6 @@
   font-family: Consolas, Monaco, monospace;
 }
 
-.section22 pre code {
+.css22 pre code {
   font: inherit;
 }

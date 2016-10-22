@@ -1,22 +1,22 @@
-.section21 {
+.css21 {
   font: inherit;
 }
 
-.section21 dt, .section21 dd {
+.css21 dt, .css21 dd {
   display: inline;
   margin: 0;
 }
 
-.section21 dd {
+.css21 dd {
   font-weight: 600;
 }
 
-.section21 dd + dt::before {
+.css21 dd + dt::before {
   content: "\A";
   white-space: pre;
 }
 
-.section21 dd + dd::before {
+.css21 dd + dd::before {
   content: ', ';
   font-weight: normal;
   margin-left: -.25em;

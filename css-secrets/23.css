@@ -1,4 +1,4 @@
-.section23 pre {
+.css23 pre {
   padding-left: .5em;
   padding-right: .5em;
   line-height: 1.5;
@@ -9,7 +9,7 @@
   font-family: Consolas, Monaco, monospace;
 }
 
-.section23 pre code {
+.css23 pre code {
   font: inherit;
 }
 
