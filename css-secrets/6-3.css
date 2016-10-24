@@ -1,6 +1,0 @@
-.container {
-  background: #655;
-  background-image: radial-gradient(tan 30%, transparent 0), radial-gradient(tan 30%,transparent 0);
-  background-size: 30px 30px;
-  background-position: 0 0, 15px 15px;
-}
