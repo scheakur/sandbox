@@ -4,7 +4,8 @@
 
 .css30-1 img {
   position: fixed;
-  top: 50%; left: 50%;
+  top: 50%;
+  left: 50%;
   margin: -200px;
   box-shadow: 0 0 0 50vmax rgba(0,0,0,.8);
 }
