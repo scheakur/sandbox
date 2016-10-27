@@ -1,20 +1,19 @@
-.css32 ul {
-  overflow: auto;
-  width: 10em;
-  height: 8em;
-  padding: .3em .5em;
-  border: 1px solid silver;
-  list-style: none;
+.css32 button {
   font-size: 2rem;
-  background:
-    linear-gradient(white 15px, hsla(0, 0%, 100%, 0)) 0 0 / 100% 50px,
-    radial-gradient(at top, rgba(0, 0, 0, .2), transparent 70%) 0 0 / 100% 15px,
-    linear-gradient(to top, white 15px, hsla(0, 0%, 100%, 0)) bottom / 100% 50px,
-    radial-gradient(at bottom, rgba(0, 0, 0, .2), transparent 70%) bottom / 100% 15px;
-  background-repeat: no-repeat;
-  background-attachment: local, scroll, local, scroll;
-  margin-top: 30px;
 }
 
+.css32-1 img {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin: -200px;
+  box-shadow: 0 0 0 50vmax rgba(0,0,0,.8);
+}
 
+.css32-1-1 {
+  display: none;
+}
 
+.css32-2 dialog::backdrop {
+  background: rgba(0, 0, 0, .8);
+}
