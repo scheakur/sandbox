@@ -1,0 +1,9 @@
+.css36-1 figure {
+  max-width: 300px;
+  max-width: min-content;
+  margin: auto;
+}
+
+.css36-1 figure img {
+  max-width: inherit;
+}
