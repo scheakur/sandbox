@@ -1,0 +1,19 @@
+.css37 table {
+  border-collapse: collapse;
+  width: 50em;
+  margin-bottom: 1em;
+}
+
+.css37 td {
+  border: 1px solid #ccc;
+}
+
+.css37-2 table {
+  table-layout: fixed;
+}
+
+.css37-2 .ellipsis {
+  white-space: pre;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
