@@ -1,0 +1,49 @@
+.css38 {
+  border: 1px solid #ccc;
+  margin-bottom: 2rem;
+}
+
+.css38 ul {
+  counter-reset: css38;
+  list-style: none;
+}
+
+.css38 li {
+  display: inline-block;
+  margin: 5px;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 4px;
+  background-color: #cbb0a6;
+  color: #fff;
+}
+
+.css38 li::before {
+  counter-increment: css38;
+  content: counters(css38, ".") " ";
+}
+
+
+.css38-1 li:first-child:nth-last-child(4),
+.css38-1 li:first-child:nth-last-child(4) ~ li {
+  background-color: #c00065;
+}
+
+.css38-2 li:first-child:nth-last-child(n+4),
+.css38-2 li:first-child:nth-last-child(n+4) ~ li {
+  background-color: #c00065;
+}
+
+.css38-3 li:first-child:nth-last-child(-n+4),
+.css38-3 li:first-child:nth-last-child(-n+4) ~ li {
+  background-color: #c00065;
+}
+
+.css38-4 li:first-child:nth-last-child(n+3):nth-last-child(-n+5),
+.css38-4 li:first-child:nth-last-child(n+3):nth-last-child(-n+5) ~ li {
+  background-color: #c00065;
+}
+
+
