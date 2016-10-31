@@ -1,0 +1,20 @@
+.css39 header,
+.css39 section,
+.css39 footer {
+  padding: 1em calc(50% - 450px);
+}
+
+.css39 header {
+  background: orange;
+  color: white;
+}
+
+.css39 section + section{
+  background: #eee;
+}
+
+.css39 footer {
+  background: #252525;
+  color: white;
+}
+
