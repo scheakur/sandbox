@@ -1,0 +1,15 @@
+@keyframes css43-loader {
+  to {
+    background-position: -800px 0;
+  }
+}
+
+.css43 .loader {
+  width: 100px;
+  height: 100px;
+  text-indent: 9999px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, .2) url("./loader.png") 0 0;
+  border-radius: 20px;
+  animation: css43-loader 1s infinite steps(8);
+}
