@@ -1,0 +1,26 @@
+@keyframes css44-blink-1 {
+  50% { color: transparent }
+}
+
+@keyframes css44-blink-2 {
+  to { color: transparent }
+}
+
+.css44 {
+  padding: 1em;
+  margin: 1em;
+  background: gold;
+}
+
+.css44-1 {
+  animation: 1s css44-blink-1 30;
+}
+
+.css44-2 {
+  animation: .5s css44-blink-2 60;
+  animation-direction: alternate;
+}
+
+.css44-3 {
+  animation: 1s css44-blink-1 30 steps(1);
+}
