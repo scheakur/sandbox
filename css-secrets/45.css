@@ -1,0 +1,16 @@
+@keyframes css45-typing {
+  from { width: 0 }
+}
+
+@keyframes css45-caret {
+  50% { border-right-color: transparent; }
+}
+
+.css45 h1 {
+  font: bold 200% Consolas, Monaco, monospace;
+  width: 15ch;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: .05em solid;
+  animation: css45-typing 8s steps(15), css45-caret 1s steps(1) infinite;
+}
