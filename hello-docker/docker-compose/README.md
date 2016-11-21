@@ -237,11 +237,10 @@ Gemfile.lock        app/                config.ru           lib/                
 ```
 
 ```console
-# ls
-Dockerfile          README.rdoc         bin/                db/                 log/                tmp/
-Gemfile             Rakefile            config/             docker-compose.yml  public/             vendor/
-Gemfile.lock        app/                config.ru           lib/                test/
 # vim Gemfile
+```
+
+```console
 # docker-compose build
 db uses an image, skipping
 Building web
