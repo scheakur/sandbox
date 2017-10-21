@@ -9,6 +9,11 @@
 }
 
 @font-face {
+  font-family: "Meiryo UI";
+  src: local("UD Digi Kyokasho NK-R");
+}
+
+@font-face {
   font-family: "MS PGothic";
   src: local("UD Digi Kyokasho NK-R");
 }
@@ -18,3 +23,7 @@
   src: local("UD Digi Kyokasho NK-R");
 }
 
+@font-face {
+  font-family: "ＭＳ Ｐゴシック";
+  src: local("UD Digi Kyokasho NK-R");
+}
