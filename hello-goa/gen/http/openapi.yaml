@@ -1,0 +1,113 @@
+swagger: "2.0"
+info:
+  title: Calculator Service
+  description: HTTP service for adding numbers
+  version: ""
+host: localhost:80
+consumes:
+- application/json
+- application/xml
+- application/gob
+produces:
+- application/json
+- application/xml
+- application/gob
+paths:
+  /add/{a}/{b}:
+    get:
+      tags:
+      - hello-goa-service
+      summary: add hello-goa-service
+      operationId: hello-goa-service#add
+      parameters:
+      - name: a
+        in: path
+        description: Left operand
+        required: true
+        type: integer
+      - name: b
+        in: path
+        description: Right operand
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK response.
+          schema:
+            type: integer
+            format: int64
+      schemes:
+      - grpc
+      - http
+  /hello/{name}:
+    get:
+      tags:
+      - hello-goa-service
+      summary: hello hello-goa-service
+      operationId: hello-goa-service#hello
+      parameters:
+      - name: name
+        in: path
+        description: Name to say hello to
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK response.
+          schema:
+            type: string
+      schemes:
+      - grpc
+      - http
+  /minus/{a}/{b}:
+    get:
+      tags:
+      - hello-goa-service
+      summary: minus hello-goa-service
+      operationId: hello-goa-service#minus
+      parameters:
+      - name: a
+        in: path
+        description: Left operand
+        required: true
+        type: integer
+      - name: b
+        in: path
+        description: Right operand
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK response.
+          schema:
+            type: integer
+            format: int64
+      schemes:
+      - grpc
+      - http
+  /multiply/{a}/{b}:
+    get:
+      tags:
+      - hello-goa-service
+      summary: multiply hello-goa-service
+      operationId: hello-goa-service#multiply
+      parameters:
+      - name: a
+        in: path
+        description: Left operand
+        required: true
+        type: integer
+      - name: b
+        in: path
+        description: Right operand
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK response.
+          schema:
+            type: integer
+            format: int64
+      schemes:
+      - grpc
+      - http
